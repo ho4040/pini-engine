@@ -1,0 +1,37 @@
+=문자열일부 매크로=
+
+==정의==
+
+<div style='background-color:#fafafa;border:1px solid #dfdfdf;padding: 5px 10px 5px 10px;'>
+[문자열일부 문자열=[[Lnx:paramtype string|문자열]] 시작=[[Lnx:paramtype number|숫자]] 길이=[[Lnx:paramtype number|숫자]]]
+</div>
+<br>문자열을 지정된 시작점부터 길이만큼 자릅니다.
+
+==매개변수==
+
+{| class="wikitable"
+| style="width:100px; background-color:#f0f0f0"|매개변수명
+| style="width:100px; background-color:#f0f0f0"|인자타입
+| style="width:100px; background-color:#f0f0f0"|생략가능
+| style="width:100px; background-color:#f0f0f0"|기본값
+| style="background-color:#f0f0f0"|설명
+|-
+|문자열||[[Lnx:paramtype string|문자열]]||불가능||<code>""</code>||
+|-
+|시작||[[Lnx:paramtype number|숫자]]||불가능||<code>0</code>||
+|-
+|길이||[[Lnx:paramtype number|숫자]]||불가능||<code>5</code>||
+|}
+
+==예제==
+
+<lnx>년월일=[시간정보 타입="년월일" ]
+년=[문자열일부 길이=4 문자열=년월일 시작=1 ]
+월=[문자열일부 길이=2 문자열=년월일 시작=6 ]
+일=[문자열일부 길이=2 문자열=년월일 시작=9 ]
+
+[독백]
+;년월일=<=년월일>
+;오늘은 <=년>년 <=월>월 <=일>일 입니다.</lnx>
+
+http://i.imgur.com/NG0fHiM.png

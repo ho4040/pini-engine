@@ -1,0 +1,30 @@
+=터치제스처 매크로=
+
+==정의==
+
+<div style='background-color:#fafafa;border:1px solid #dfdfdf;padding: 5px 10px 5px 10px;'>
+[터치제스처 아이디=[[Lnx:paramtype string|문자열]] 매크로명=[[Lnx:paramtype marco list|함수목록]]]
+</div>
+<br>터치제스처를 입력 받을 수 있는 매크로입니다. 매크로에서는 마지막으로 터치받은 터치의 개수가 '터치제스처.터치갯수'에, 터치타입은 '터치제스처.터치타입'에 저장됩니다.
+
+==매개변수==
+
+{| class="wikitable"
+| style="width:100px; background-color:#f0f0f0"|매개변수명
+| style="width:100px; background-color:#f0f0f0"|인자타입
+| style="width:100px; background-color:#f0f0f0"|생략가능
+| style="width:100px; background-color:#f0f0f0"|기본값
+| style="background-color:#f0f0f0"|설명
+|-
+|아이디||[[Lnx:paramtype string|문자열]]||불가능||<code>""</code>||터치제스처 아이디를 설정합니다. 제스처를 해제할 때 사용됩니다.
+|-
+|매크로명||[[Lnx:paramtype marco list|함수목록]]||불가능||<code>""</code>||제스처가 확인되면 해당 매크로가 실행됩니다.
+|}
+
+==예제==
+
+<lnx>
+@매크로 터치제스처테스트:
+ [텍스트 내용=터치제스처.터치갯수+"점의 "+터치제스처.터치타입+" 제스처가 감지되었습니다." 아이디="터치갯수"]
+[터치제스처 매크로명="터치제스처테스트" 아이디="터치" ]
+</lnx>

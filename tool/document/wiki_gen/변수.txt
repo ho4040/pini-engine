@@ -1,0 +1,38 @@
+=변수 매크로=
+
+==정의==
+
+<div style='background-color:#fafafa;border:1px solid #dfdfdf;padding: 5px 10px 5px 10px;'>
+[변수 아이디=[[Lnx:paramtype string|문자열]] 값=[[Lnx:paramtype string|문자열]]]
+</div>
+<br>변수에 값을 지정하거나 값을 가져옵니다. '값' 매개변수를 사용할 경우, 해당 변수에 값을 저장하며, '값' 매개변수를 사용하지 않을 경우, 해당 변수의 값을 가져올 수 있습니다.
+
+==매개변수==
+
+{| class="wikitable"
+| style="width:100px; background-color:#f0f0f0"|매개변수명
+| style="width:100px; background-color:#f0f0f0"|인자타입
+| style="width:100px; background-color:#f0f0f0"|생략가능
+| style="width:100px; background-color:#f0f0f0"|기본값
+| style="background-color:#f0f0f0"|설명
+|-
+|아이디||[[Lnx:paramtype string|문자열]]||불가능||<code>""</code>||
+|-
+|값||[[Lnx:paramtype string|문자열]]||불가능||<code>"0"</code>||
+|}
+
+==예제==
+
+<lnx>인덱스=1
+[변수 아이디="내숫자"+인덱스 값="17"]
+인덱스=2
+[변수 아이디="내숫자"+인덱스 값="27"]
+인덱스=1
+값=[변수 아이디="내숫자"+인덱스 ]
+
+[독백]
+;내숫자1=<=내숫자1>
+;내숫자2=<=내숫자2>
+;값=<=값></lnx>
+
+http://i.imgur.com/I6k481c.png

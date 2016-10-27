@@ -1,0 +1,72 @@
+{
+    "Angle": {
+        "Angle": 6,
+        "AngleVar": 5
+    },
+    "Color": {
+        "EndColor": 2523,
+        "EndColorVar": 242,
+        "StartColor": 131313,
+        "StartColorVar": 0
+    },
+    "Life": {
+        "Life": 0,
+        "LifeVar": 0
+    },
+    "Loop": {
+        "IsLoop": "True"
+    },
+    "Mode": {
+        "Duration": 0,
+        "EmissionRate": 0,
+        "IsAutoRemoveOnFinish": "False",
+        "Mode": "Gravity",
+        "TotalParticles": 0
+    },
+    "Move": {
+        "GravityX": 0,
+        "GravityY": 0,
+        "RadialAccel": 14,
+        "RadialAccelVar": 35,
+        "Speed": 35,
+        "SpeedVar": 30,
+        "TagentiAlAccelVar": 0,
+        "TagentialAccel": 0
+    },
+    "Position": {
+        "PosVarX": 0,
+        "PosVarY": 0,
+        "PositionType": "Free",
+        "SourcePositionX": 0,
+        "SourcePositionY": 0
+    },
+    "Radius": {
+        "EndRadius": 0,
+        "EndRadiusVar": 0,
+        "RotatePerSecond": 0,
+        "RotatePerSecondVar": 0,
+        "StartRadius": 0,
+        "StartRadiusVar": 0
+    },
+    "Scale": {
+        "Scale": 0
+    },
+    "Size": {
+        "EndSize": 0,
+        "EndSizeVar": 0,
+        "StartSize": 0,
+        "StartSizeVar": 0
+    },
+    "Spin": {
+        "EndSpin": 0,
+        "EndSpinVar": 0,
+        "StartSpin": 0,
+        "StrartSpinVar": 0
+    },
+    "Texture": {
+        "DestBlendFunc": 5,
+        "SrcBlendFunc": 0,
+        "TextureImageData": 0,
+        "TexturePath": 0
+    }
+}

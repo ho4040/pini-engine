@@ -1,0 +1,73 @@
+{
+    "Angle": {
+        "Angle": 90,
+        "AngleVar": 80
+    },
+    "Color": {
+        "EndColor": "#0004ff",
+        "EndColorVar": "#4e92ff",
+        "StartColor": "#ff0004",
+        "StartColorVar": "#8480ff"
+    },
+    "Life": {
+        "Life": 5,
+        "LifeVar": 2
+    },
+    "Loop": {
+        "IsLoop": "True"
+    },
+    "Mode": {
+        "Duration": 0,
+        "EmissionRate": 20,
+        "IsAutoRemoveOnFinish": "True",
+        "Mode": "Radius",
+        "Temp": "False",
+        "TotalParticles": 150
+    },
+    "Move": {
+        "GravityAngle": 270,
+        "GravitySpeed": 50,
+        "RadialAccel": 0,
+        "RadialAccelVar": 0,
+        "Speed": 100,
+        "SpeedVar": 0,
+        "TagentiAlAccelVar": 0,
+        "TagentialAccel": 0
+    },
+    "Position": {
+        "PosVarX": 20,
+        "PosVarY": 20,
+        "PositionType": "Free",
+        "SourcePositionX": 0,
+        "SourcePositionY": 0
+    },
+    "Radius": {
+        "EndRadius": 0,
+        "EndRadiusVar": 0,
+        "RotatePerSecond": 0,
+        "RotatePerSecondVar": 0,
+        "StartRadius": 0,
+        "StartRadiusVar": 0
+    },
+    "Scale": {
+        "Scale": 0
+    },
+    "Size": {
+        "EndSize": 15,
+        "EndSizeVar": 2,
+        "StartSize": 15,
+        "StartSizeVar": 5
+    },
+    "Spin": {
+        "EndSpin": 0,
+        "EndSpinVar": 0,
+        "StartSpin": 0,
+        "StartSpinVar": 0
+    },
+    "Texture": {
+        "DestBlendFunc": "GL_ONE",
+        "SrcBlendFunc": "GL_SRC_ALPHA",
+        "TextureImageData": 0,
+        "TexturePath": "C:/work/devTool/tool/build/rain.png"
+    }
+}

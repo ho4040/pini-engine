@@ -1,0 +1,39 @@
+=배경음 매크로=
+
+==정의==
+
+<div style='background-color:#fafafa;border:1px solid #dfdfdf;padding: 5px 10px 5px 10px;'>
+[배경음 파일명=[[Lnx:paramtype sound file|사운드파일]] 시간=[[Lnx:paramtype number|숫자]] 반복=[[Lnx:paramtype boolean|승락]] 볼륨=[[Lnx:paramtype number|숫자]]]
+</div>
+<br>배경음악을 재생합니다. 재생중이던 배경음을 제거하려면 배경음끄기 매크로를 참고하세요. <ul><li>지원하는 포맷 : MP3 </li></ul>
+
+지원하는 포멧은 아래와 같습니다.
+* MP3
+
+
+==매개변수==
+
+{| class="wikitable"
+| style="width:100px; background-color:#f0f0f0"|매개변수명
+| style="width:100px; background-color:#f0f0f0"|인자타입
+| style="width:100px; background-color:#f0f0f0"|생략가능
+| style="width:100px; background-color:#f0f0f0"|기본값
+| style="background-color:#f0f0f0"|설명
+|-
+|파일명||[[Lnx:paramtype sound file|사운드파일]]||불가능||<code>""</code>||지정된 파일을 재생합니다. 확장자를 포함한 파일명을 넣어주어야 합니다.
+|-
+|시간||[[Lnx:paramtype number|숫자]]||가능||<code>0</code>||페이드인 시간입니다.
+|-
+|반복||[[Lnx:paramtype boolean|승락]]||가능||<code>""</code>||반복할지 말지를 지정합니다
+|-
+|볼륨||[[Lnx:paramtype number|숫자]]||가능||<code>1</code>||볼륨입니다. 0부터 1사이의 값을 넣을 수 있습니다
+|}
+
+==예제==
+
+<lnx>[배경음 파일명="flyMeToTheMoon.mp3" 반복="예"]
+[독백]
+;fly me too the moon..
+;let me...
+;다음 가사가 뭐였지
+[배경음끄기]</lnx>

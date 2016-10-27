@@ -1,0 +1,25 @@
+=스크립트 매크로=
+
+==정의==
+
+<div style='background-color:#fafafa;border:1px solid #dfdfdf;padding: 5px 10px 5px 10px;'>
+[스크립트 파일명=[[Lnx:paramtype string|문자열]] 실행=[[Lnx:paramtype boolean|승락]]]
+</div>
+<br>다른 스크립트를 실행합니다. 실행된 스크립트가 모두 끝나면 스크립트를 불러온 지점으로 돌아옵니다. LNX 스크립트를 실행할 수도 있지만, lua 파일도 실행할 수 있습니다.
+
+==매개변수==
+
+{| class="wikitable"
+| style="width:100px; background-color:#f0f0f0"|매개변수명
+| style="width:100px; background-color:#f0f0f0"|인자타입
+| style="width:100px; background-color:#f0f0f0"|생략가능
+| style="width:100px; background-color:#f0f0f0"|기본값
+| style="background-color:#f0f0f0"|설명
+|-
+|파일명||[[Lnx:paramtype string|문자열]]||불가능||<code>""</code>||실행될 스크립트 파일의 확장자를 포함한 파일명을 전달해 주어야 합니다.
+|-
+|실행||[[Lnx:paramtype boolean|승락]]||불가능||<code>"예"</code>||LNX 파일일 경우 아니오 일 경우 단순로딩만 진행, 예 일 경우 로드 후 실행까지 함. lua 파일일 경우, '아니오' 만 사용 가능하며, 무조건 실행함.
+|}
+
+==예제==
+

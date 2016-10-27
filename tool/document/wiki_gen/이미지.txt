@@ -1,0 +1,84 @@
+=이미지 매크로=
+
+==정의==
+
+<div style='background-color:#fafafa;border:1px solid #dfdfdf;padding: 5px 10px 5px 10px;'>
+[이미지 아이디=[[Lnx:paramtype string|문자열]] 파일명=[[Lnx:paramtype image file|이미지파일]] 위치=[[Lnx:paramtype position|위치]] 효과=[[Lnx:paramtype show effect|노드입장효과]] 효과시간=[[Lnx:paramtype number|숫자]] 색상=[[Lnx:paramtype rgb|RGB]] 투명도=[[Lnx:paramtype number|숫자]] 오버롤=[[Lnx:paramtype image file|이미지파일]] 크기=[[Lnx:paramtype scale|크기]] 북마크이동=[[Lnx:paramtype bookmark list|북마크]] 부모=[[Lnx:paramtype displaying node|노드아이디]] 스크린샷노출=[[Lnx:paramtype boolean|승락]] GUI=[[Lnx:paramtype boolean|승락]] x=[[Lnx:paramtype number|숫자]] y=[[Lnx:paramtype number|숫자]] 반전=[[Lnx:paramtype flip|플립]] 항상표시=[[Lnx:paramtype boolean|승락]] 색상모드=[[Lnx:Blend function|블랜드모드]] 회전=[[Lnx:paramtype string|문자열]] 유지=[[Lnx:paramtype string|문자열]] 안티=[[Lnx:paramtype boolean|승락]] 잔상시간=[[Lnx:paramtype number|숫자]]]
+</div>
+<br>화면에 이미지를 출력합니다.<ul><li>출력한 이미지에 이동, 회전 등등의 효과를 주시려면 애니메이션 매크로 를 이용하세요.</li><li>지원포멧 JPG, PNG, TIF</li></ul>
+
+==매개변수==
+
+{| class="wikitable"
+| style="width:100px; background-color:#f0f0f0"|매개변수명
+| style="width:100px; background-color:#f0f0f0"|인자타입
+| style="width:100px; background-color:#f0f0f0"|생략가능
+| style="width:100px; background-color:#f0f0f0"|기본값
+| style="background-color:#f0f0f0"|설명
+|-
+|아이디||[[Lnx:paramtype string|문자열]]||불가능||<code>""</code>||해당 이미지를 지칭하는 고유 아이디입니다.
+|-
+|파일명||[[Lnx:paramtype image file|이미지파일]]||불가능||<code>""</code>||보여질 이미지의 확장자를 포함한 파일명을 전달해야 합니다.
+|-
+|위치||[[Lnx:paramtype position|위치]]||가능||<code>"화면중앙"</code>||이미지의 위치를 전달해야 합니다.
+|-
+|효과||[[Lnx:paramtype show effect|노드입장효과]]||가능||<code>"업페이드"</code>||이미지가 나타날때의 효과를 정할수 있습니다. 일부 효과는 [애니메이션] 과 동시에 사용할 경우, 비정상 작동할 수 있습니다.
+|-
+|효과시간||[[Lnx:paramtype number|숫자]]||가능||<code>1</code>||효과' 매개변수에 지정한 효과가 재생되는 초단위 시간
+|-
+|색상||[[Lnx:paramtype rgb|RGB]]||가능||<code>"255,255,255"</code>||이미지 RGB 채널별로 강도를 지정할수 있습니다. 최소 0부터 최대 255 까지
+|-
+|투명도||[[Lnx:paramtype number|숫자]]||가능||<code>255</code>||이미지의 불투명도를 지정 할 수 있습니다. 최소 0부터 최대255 까지 
+|-
+|오버롤||[[Lnx:paramtype image file|이미지파일]]||가능||<code>""</code>||(PC에서만 동작하는 인자 입니다.) 마우스가 그림위로 올라와 있을때 다른 이미지로 바뀌도록 만듭니다. 바뀌게 될 이미지의 확장자를 포함한 파일명 필요.
+|-
+|크기||[[Lnx:paramtype scale|크기]]||가능||<code>"원본크기"</code>||이미지의 크기를 정할수 있습니다
+|-
+|북마크이동||[[Lnx:paramtype bookmark list|북마크]]||가능||<code>""</code>||문자열 형태로 북마크의 이름을 전달하면 클릭 하였을 경우 실행 지점이 해당 북마크로 이동합니다.
+|-
+|부모||[[Lnx:paramtype displaying node|노드아이디]]||가능||<code>""</code>||다른 개체의 자식으로 종속되도록 합니다. 자식이미지는 부모개체의 회전, 이동등에 영향을 받습니다.
+|-
+|스크린샷노출||[[Lnx:paramtype boolean|승락]]||가능||<code>"예"</code>||스크린샷 매크로를 호출하여 스크린샷을 저장할 경우 해당 이미지가 스크린샷에 포함되게 할 것인지에 대한 여부를 지정할수 있습니다.
+|-
+|GUI||[[Lnx:paramtype boolean|승락]]||가능||<code>"아니오"</code>||화면의 최상단 레이어에 배치시킬지 여부입니다. 터치 입력도 가장 우선 받습니다.
+|-
+|x||[[Lnx:paramtype number|숫자]]||가능||<code>0</code>||위치 매개변수 대신 넘겨줄 수 있는 인자 입니다. 이미지 위치의 x값을 지정해 줄 수 있습니다. x나 y가 쓰이면 위치는 무시됩니다.
+|-
+|y||[[Lnx:paramtype number|숫자]]||가능||<code>0</code>||위치매개변수 대신 넘겨줄 수 있는 인자 입니다. 이미지 위치의 y값을 지정해 줄 수 있습니다. x나 y가 쓰이면 위치는 무시됩니다.
+|-
+|반전||[[Lnx:paramtype flip|플립]]||가능||<code>"좌우"</code>||이미지를 뒤집어 찍는 방식을 지정합니다.
+|-
+|항상표시||[[Lnx:paramtype boolean|승락]]||가능||<code>"아니오"</code>||화면초기화나 전환 매크로를 사용해도 사라지지 않도록 합니다.
+|-
+|색상모드||[[Lnx:Blend function|블랜드모드]]||가능||<code>"기본"</code>||색상을 어떻게 표현할 것인지에 대한 모드입니다.
+|-
+|회전||[[Lnx:paramtype string|문자열]]||가능||<code>"0"</code>||이미지에 대한 회전 값입니다.
+|-
+|유지||[[Lnx:paramtype string|문자열]]||가능||<code>"아니오"</code>||이미지를 다시 생성하지 않고 있던 이미지를 사용합니다. 없을 시 새로 생성합니다.
+|-
+|안티||[[Lnx:paramtype boolean|승락]]||가능||<code>"예"</code>||안티 얼라이징을 켤지 끌지를 결정합니다.
+|-
+|잔상시간||[[Lnx:paramtype number|숫자]]||가능||<code>0.2</code>||같은 아이디로 이미지를 교체하면서 효과를 줄 경우에, 기존 이미지의 유지시간을 조정합니다.
+|}
+
+==예제==
+
+''이미지 출력예제'''
+<lnx>[이미지 아이디="멍구그림" 파일="멍구.png"]</lnx>
+
+
+'''효과 적용예'''
+
+<lnx>[독백 ]
+;쥐를 이동시킵니다.
+
+[이미지 아이디="쥐그림" 파일명="쥐.png"  위치="200,200"]
+[애니메이션 아이디="쥐그림" 타입="이동" 위치="400,300" 시간=1 ]
+[대기 시간=1 ]
+
+[독백 ]
+;쥐 이동이 완료되었습니다.</lnx>
+
+'''효과 적용예 결과'''
+
+http://i.imgur.com/LnEzyB5.gif

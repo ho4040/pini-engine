@@ -1,0 +1,30 @@
+=랜덤 매크로=
+
+==정의==
+
+<div style='background-color:#fafafa;border:1px solid #dfdfdf;padding: 5px 10px 5px 10px;'>
+[랜덤 시작=[[Lnx:paramtype number|숫자]] 끝=[[Lnx:paramtype number|숫자]]]
+</div>
+<br>시작과 끝을 포함하는 랜덤한 정수를 얻습니다.
+
+==매개변수==
+
+{| class="wikitable"
+| style="width:100px; background-color:#f0f0f0"|매개변수명
+| style="width:100px; background-color:#f0f0f0"|인자타입
+| style="width:100px; background-color:#f0f0f0"|생략가능
+| style="width:100px; background-color:#f0f0f0"|기본값
+| style="background-color:#f0f0f0"|설명
+|-
+|시작||[[Lnx:paramtype number|숫자]]||불가능||<code>0</code>||시작값입니다.
+|-
+|끝||[[Lnx:paramtype number|숫자]]||불가능||<code>100</code>||끝값입니다.
+|}
+
+==예제==
+
+<lnx>@매크로 키입력시:
+ 값 = [랜덤 끝="3" 시작="0" ] # 0, 1, 2, 3중 한가지 값을 얻습니다.
+ [텍스트 내용=값 아이디="랜덤값" 위치="화면중앙" ]
+  
+[키입력 매크로="키입력시" 아이디="키후킹" ]</lnx>

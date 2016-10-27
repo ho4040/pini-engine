@@ -1,0 +1,10 @@
+pip install ply
+pip install pillow
+pip install openpyxl
+pip install -U PySide
+pip install appdirs
+
+http://aka.ms/vcpython27
+
+
+python setup.py install --no-luajit

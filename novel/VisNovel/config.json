@@ -1,0 +1,19 @@
+{
+    "init_cfg":{
+       "isLandscape": true,
+       "isWindowTop": false,
+       "name": "pini_remote",
+       "width": 960,
+       "height": 640,
+       "entry": "src/main.lua",
+       "consolePort": 6050,
+       "uploadPort": 6060
+    },
+    "simulator_screen_size": [
+        {
+            "title": "Android (1920x1080)",
+            "width": 1920,
+            "height": 1080
+        }
+    ]
+}

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx" title="PiniEngine FadeMap generator">
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.graphics.codec.PNGEncoder;
+			
+			private var _imageSize:Rectangle = new Rectangle;
+			
+			[Bindable]
+			private var _running:Boolean = false;
+			
+			[Bindable]
+			private var _labelStr:String = "";
+			
+			protected function onClickOpenButton(event:MouseEvent):void
+			{
+				var file:File = new File;
+				file.addEventListener(Event.SELECT, onOpenFile );
+				file.browseForOpen("select swf file", [new FileFilter("Flas swf file", "*.swf")]);
+			}
+			
+			private function onOpenFile( event:Event ):void
+			{
+				var file:File = event.currentTarget as File;
+				var urlReq:URLRequest = new URLRequest( file.nativePath ); 
+				var loader:Loader = new Loader();
+				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadComplete );
+				loader.load(urlReq);
+			}
+			
+			private function onLoadComplete( event:Event ):void
+			{
+				var info:LoaderInfo = event.currentTarget as LoaderInfo;
+				var loader:Loader = info.loader;
+				var movieClip:MovieClip = loader.content as MovieClip;
+				
+				var rect:Rectangle = movieClip.getBounds(movieClip);
+				var totalFrame:int = movieClip.totalFrames;
+				var sprite:Sprite = new Sprite;
+				
+				if(baseScreen.numChildren > 0 ){
+					var oldSprite:Sprite = baseScreen.getChildAt( 0 ) as Sprite;
+					for( var j:int=0; j<oldSprite.numChildren; j++){
+						var bm:Bitmap = oldSprite.getChildAt(j) as Bitmap;
+						if(bm)
+							bm.bitmapData.dispose();
+					}
+				}
+				baseScreen.removeChildren();
+				baseScreen.addChild( sprite );
+				
+				_running = true;
+				
+				var timer:Timer = new Timer(1, 1);
+				var ct:ColorTransform = new ColorTransform(0, 0, 0, 1, 0,0,0,1);
+				var i:int = 0;
+				timer.addEventListener(TimerEvent.TIMER_COMPLETE, function(e:Event):void{
+					
+					movieClip.gotoAndStop(i+1);
+					
+					var brightness:Number = Number(i)/Number(totalFrame);					
+					ct.blueOffset = ct.greenOffset = ct.redOffset = brightness*255;
+					
+					var bitmapData:BitmapData = new BitmapData(info.width , info.height, true, 0);					
+					bitmapData.draw( movieClip, null, ct );
+					
+					var bitmap:Bitmap = new Bitmap(bitmapData);					
+					sprite.addChildAt(bitmap, 0);
+					_imageSize = _imageSize.union(bitmapData.rect);
+					
+					if(i<totalFrame){						
+						i++;
+						_labelStr = "making : "+i+"/"+totalFrame;
+						timer.reset();
+						timer.start();
+					}else{
+						_running = false;
+					}
+				});
+				
+				timer.start();
+				
+				
+			}
+				
+			protected function onClickSaveButton(event:MouseEvent):void
+			{
+				var file:File = new File;
+				file.addEventListener(Event.SELECT, onSaveTargetSelect );
+				file.browseForSave("save");
+			}
+			
+			private function onSaveTargetSelect( event:Event ):void
+			{
+				var file:File = event.target as File;
+				var fs:FileStream = new FileStream();
+				var bitmapData:BitmapData = new BitmapData(_imageSize.width, _imageSize.height, false, 0);
+				bitmapData.draw(baseScreen);
+				var encoder:PNGEncoder = new PNGEncoder();
+				var bytes:ByteArray = encoder.encode(bitmapData);
+				fs.open( file, FileMode.WRITE );
+				fs.writeBytes( bytes );
+				fs.close();
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:VGroup width="100%" height="100%">
+		<s:HGroup width="100%">
+			<s:Button label="Open Swf" click="onClickOpenButton(event)" />	
+			<s:Button label="Save as png" click="onClickSaveButton(event)" />
+		</s:HGroup>
+		<s:Group width="100%" height="100%">
+			<mx:UIComponent id="baseScreen" />	
+		</s:Group>
+	</s:VGroup>
+	
+	<s:Panel width="100%" height="100%" id="pgPannel" visible="{_running}">
+		<s:Label id="pgLabel" text="{_labelStr}" horizontalCenter="0" verticalCenter="0"/>
+	</s:Panel>
+			 
+</s:WindowedApplication>

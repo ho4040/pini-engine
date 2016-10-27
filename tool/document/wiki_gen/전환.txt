@@ -1,0 +1,57 @@
+=전환 매크로=
+
+==정의==
+
+<div style='background-color:#fafafa;border:1px solid #dfdfdf;padding: 5px 10px 5px 10px;'>
+[전환 아이디=[[Lnx:paramtype string|문자열]] 시간=[[Lnx:paramtype number|숫자]] 인자이미지=[[Lnx:paramtype image file|이미지파일]] 크기=[[Lnx:paramtype scale|크기]] 이미지=[[Lnx:paramtype image file|이미지파일]]]
+</div>
+<br>화면에 전환효과를 적용해 이미지를 출력합니다. 인자이미지 매개변수는 밝기로 시점(time)정보가 표현된 PNG이미지를 지정해야 합니다. 밝은 부분일 수록 더 늦게 보이게 됩니다.<img src='http://i.imgur.com/fMjwJnm.gif' width='100%'>
+
+==매개변수==
+
+{| class="wikitable"
+| style="width:100px; background-color:#f0f0f0"|매개변수명
+| style="width:100px; background-color:#f0f0f0"|인자타입
+| style="width:100px; background-color:#f0f0f0"|생략가능
+| style="width:100px; background-color:#f0f0f0"|기본값
+| style="background-color:#f0f0f0"|설명
+|-
+|아이디||[[Lnx:paramtype string|문자열]]||불가능||<code>""</code>||전환이 완료가 되면 이미지 매크로로 이미지를 출력한 것과 동일하게 삭제 및 애니메이션 객체로 다룰 수 있게 됩니다. 이때 필요한 고유 아이디 입니다.
+|-
+|시간||[[Lnx:paramtype number|숫자]]||불가능||<code>1</code>||이미지가 전환되는데 걸리는 시간입니다.
+|-
+|인자이미지||[[Lnx:paramtype image file|이미지파일]]||불가능||<code>""</code>||기로 시점을 표현한 이미지 입니다. 어두운부분일 수록 더 빨리 전환되며, 밝을 수록 늦게 보이게 됩니다.
+|-
+|크기||[[Lnx:paramtype scale|크기]]||가능||<code>"화면맞춤"</code>||전환 완료 시 이미지의 크기.
+|-
+|이미지||[[Lnx:paramtype image file|이미지파일]]||불가능||<code>""</code>||전환효과를 통해 결과적으로 보여질 이미지의 파일명입니다. 확장자를 포함해서 적어주어야 합니다.
+|}
+
+==예제==
+
+''예제코드'''
+<lnx>[이미지 아이디="배경" 파일명="교실1.png"  크기="화면맞춤"]
+[이미지 아이디="캐릭1" 파일명="피니.png" 위치="왼쪽하단" 크기="원본크기"]
+[클릭대기 ]
+[대화 이름="피니" ]
+;교무실로 가볼까?
+
+[전환 시간=4 아이디="배경" 이미지="교무실.png" 인자이미지="타임맵.png" ]
+[대기 시간=4]
+
+[이미지 아이디="캐릭1" 파일명="피니.png" 위치="왼쪽하단" 효과="업페이드"   크기="원본크기"]
+[대화 이름="피니" ]
+;선생님!
+[이미지 아이디="캐릭2" 파일명="미술샘.png"  위치="오른쪽하단"  효과="업페이드"   크기="원본크기"]
+[대화 이름="미술샘" ]
+;피니 왔니?</lnx>
+
+위 소스에서 사용된 '''타임맵.png'''는 아래와 같은 모습을 하고 있습니다. 
+
+http://i.imgur.com/VJemQQ5m.png
+
+ <code>참고</code> [[FadeMapGenerator|FadeMapGenerator]]를 이용하면 보다 쉽게 타임맵을 만들 수 있습니다.
+
+'''결과'''
+
+http://i.imgur.com/fMjwJnm.gif

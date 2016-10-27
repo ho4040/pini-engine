@@ -1,0 +1,36 @@
+=타입체크 매크로=
+
+==정의==
+
+<div style='background-color:#fafafa;border:1px solid #dfdfdf;padding: 5px 10px 5px 10px;'>
+[타입체크 변수명=[[Lnx:paramtype string|문자열]]]
+</div>
+<br>변수가 어떤 타입인지 얻어옵니다. 다음 중 하나의 문자열을 얻습니다. <ul><li>&quot;문자열&quot;</li><li>&quot;숫자&quot;</li></ul>
+
+==매개변수==
+
+{| class="wikitable"
+| style="width:100px; background-color:#f0f0f0"|매개변수명
+| style="width:100px; background-color:#f0f0f0"|인자타입
+| style="width:100px; background-color:#f0f0f0"|생략가능
+| style="width:100px; background-color:#f0f0f0"|기본값
+| style="background-color:#f0f0f0"|설명
+|-
+|변수명||[[Lnx:paramtype string|문자열]]||불가능||<code>""</code>||검사할 변수명
+|}
+
+==예제==
+
+<lnx>값1 = 1
+값2 = "ABC"
+
+검사결과1 = [타입체크 변수명="값1"]
+검사결과2 = [타입체크 변수명="값2"]
+
+[독백 ]
+;타입체크 결과 값1은 <=검사결과1>
+;타입체크 결과 값2는 <=검사결과2></lnx>
+
+'''결과'''
+
+http://i.imgur.com/16mcBkG.png

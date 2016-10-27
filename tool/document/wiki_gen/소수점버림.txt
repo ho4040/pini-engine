@@ -1,0 +1,33 @@
+=소수점버림 매크로=
+
+==정의==
+
+<div style='background-color:#fafafa;border:1px solid #dfdfdf;padding: 5px 10px 5px 10px;'>
+[소수점버림 수=[[Lnx:paramtype number|숫자]]]
+</div>
+<br>소수점 이하의 값들을 모두 버립니다.
+
+==매개변수==
+
+{| class="wikitable"
+| style="width:100px; background-color:#f0f0f0"|매개변수명
+| style="width:100px; background-color:#f0f0f0"|인자타입
+| style="width:100px; background-color:#f0f0f0"|생략가능
+| style="width:100px; background-color:#f0f0f0"|기본값
+| style="background-color:#f0f0f0"|설명
+|-
+|수||[[Lnx:paramtype number|숫자]]||불가능||<code>0</code>||소수점을 버릴 숫자를 입력합니다.
+|}
+
+==예제==
+
+<lnx>숫자=314.159265
+
+버린숫자=[소수점버림 수=숫자 ]
+
+[독백]
+;숫자는 <=숫자> 이고,
+;소수점 버린 숫자는 <=버린숫자> 입니다.
+;</lnx>
+
+http://i.imgur.com/5FqckYL.png

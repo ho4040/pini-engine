@@ -1,0 +1,44 @@
+=사용자애니메이션 매크로=
+
+==정의==
+
+<div style='background-color:#fafafa;border:1px solid #dfdfdf;padding: 5px 10px 5px 10px;'>
+[사용자애니메이션 이름=[[Lnx:paramtype string|문자열]] 노드1=[[Lnx:paramtype string|문자열]] 시작=[[Lnx:paramtype number|숫자]] 끝=[[Lnx:paramtype number|숫자]] 반복=[[Lnx:paramtype number|숫자]] 프레임시간=[[Lnx:paramtype number|숫자]]]
+</div>
+<br>
+
+==매개변수==
+
+{| class="wikitable"
+| style="width:100px; background-color:#f0f0f0"|매개변수명
+| style="width:100px; background-color:#f0f0f0"|인자타입
+| style="width:100px; background-color:#f0f0f0"|생략가능
+| style="width:100px; background-color:#f0f0f0"|기본값
+| style="background-color:#f0f0f0"|설명
+|-
+|이름||[[Lnx:paramtype string|문자열]]||불가능||<code>""</code>||
+|-
+|노드1||[[Lnx:paramtype string|문자열]]||불가능||<code>""</code>||
+|-
+|시작||[[Lnx:paramtype number|숫자]]||가능||<code>0</code>||
+|-
+|끝||[[Lnx:paramtype number|숫자]]||가능||<code></code>||
+|-
+|반복||[[Lnx:paramtype number|숫자]]||가능||<code>0</code>||
+|-
+|프레임시간||[[Lnx:paramtype number|숫자]]||가능||<code>0.1</code>||
+|}
+
+==예제==
+
+<lnx>@애니메이션 애니메이션1 :
+ @노드 1:
+  @프레임 0:
+   &위치X 0
+   &위치Y 0
+  @프레임 10:
+   &위치X 100
+   &위치Y 100
+   
+[이미지 아이디="이미지1" 파일명="1.png" ]
+[사용자애니메이션 노드1="이미지1" 이름="애니메이션1" ]</lnx>

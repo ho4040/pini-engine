@@ -1,0 +1,32 @@
+=현재환경 매크로=
+
+==정의==
+
+<div style='background-color:#fafafa;border:1px solid #dfdfdf;padding: 5px 10px 5px 10px;'>
+[현재환경 종류=[[Lnx:paramtype string|문자열]]]
+</div>
+<br>현재 환경을 가져옵니다.
+
+==매개변수==
+
+{| class="wikitable"
+| style="width:100px; background-color:#f0f0f0"|매개변수명
+| style="width:100px; background-color:#f0f0f0"|인자타입
+| style="width:100px; background-color:#f0f0f0"|생략가능
+| style="width:100px; background-color:#f0f0f0"|기본값
+| style="background-color:#f0f0f0"|설명
+|-
+|종류||[[Lnx:paramtype string|문자열]]||불가능||<code>"운영체제"</code>||얻어올 환경의 종류입니다. '리모트', '프리뷰', '익스포트', '모바일', '운영체제' 중 하나의 값을 가집니다.
+|}
+
+==예제==
+
+<lnx>
+[텍스트 내용="리모트="+[현재환경 종류="리모트"] 아이디="리모트" x=100 y=100]
+[텍스트 내용="프리뷰="+[현재환경 종류="프리뷰"] 아이디="프리뷰" x=100 y=150]
+[텍스트 내용="익스포트="+[현재환경 종류="익스포트"] 아이디="익스포트" x=100 y=200]
+[텍스트 내용="모바일="+[현재환경 종류="모바일"] 아이디="모바일" x=100 y=250]
+[텍스트 내용="운영체제="+[현재환경 종류="운영체제"] 아이디="운영체제" x=100 y=300]
+</lnx>
+
+http://i.imgur.com/aAYkkz7.png

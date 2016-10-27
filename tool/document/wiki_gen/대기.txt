@@ -1,0 +1,35 @@
+=대기 매크로=
+
+==정의==
+
+<div style='background-color:#fafafa;border:1px solid #dfdfdf;padding: 5px 10px 5px 10px;'>
+[대기 시간=[[Lnx:paramtype number|숫자]]]
+</div>
+<br>매개변수 '시간(초)'만큼 대기를 합니다.
+
+==매개변수==
+
+{| class="wikitable"
+| style="width:100px; background-color:#f0f0f0"|매개변수명
+| style="width:100px; background-color:#f0f0f0"|인자타입
+| style="width:100px; background-color:#f0f0f0"|생략가능
+| style="width:100px; background-color:#f0f0f0"|기본값
+| style="background-color:#f0f0f0"|설명
+|-
+|시간||[[Lnx:paramtype number|숫자]]||불가능||<code>0</code>||대기를 원하는 만큼의 시간(초기준)을 전달해주어야 합니다.
+|}
+
+==예제==
+
+<lnx>[이미지 아이디="멍구1" 파일명="멍구1.png" 크기="화면맞춤" 효과="줌아웃페이드" ]
+[대기 시간=1 ]
+
+[삭제 아이디="멍구1" 효과="페이드"  ]
+
+[이미지 아이디="멍구2" 파일명="멍구2.png" 효과="페이드" 크기="화면맞춤" ]
+
+[대기 시간=1 ]
+
+[애니메이션 아이디="멍구2" 타입="좌우흔들기" 폭="50" 횟수="3" 시간="0.5" 가속="" ]</lnx>
+
+http://i.imgur.com/9Axr2HY.gif

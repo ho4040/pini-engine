@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InspectorDock</class>
+ <widget class="QDockWidget" name="InspectorDock">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1087</width>
+    <height>613</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Inspector</string>
+  </property>
+  <widget class="QWidget" name="dockWidgetContents">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QTreeWidget" name="treeWidget">
+      <property name="itemsExpandable">
+       <bool>true</bool>
+      </property>
+      <property name="expandsOnDoubleClick">
+       <bool>true</bool>
+      </property>
+      <column>
+       <property name="text">
+        <string>property</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>value</string>
+       </property>
+      </column>
+      <item>
+       <property name="text">
+        <string>Angle</string>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+         <strikeout>false</strikeout>
+        </font>
+       </property>
+       <property name="background">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>140</red>
+          <green>140</green>
+          <blue>140</blue>
+         </color>
+        </brush>
+       </property>
+       <property name="foreground">
+        <brush brushstyle="NoBrush">
+         <color alpha="255">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <item>
+        <property name="text">
+         <string>Angle</string>
+        </property>
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="background">
+         <brush brushstyle="NoBrush">
+          <color alpha="255">
+           <red>0</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </property>
+        <property name="foreground">
+         <brush brushstyle="Dense5Pattern">
+          <color alpha="255">
+           <red>0</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </property>
+        <property name="flags">
+         <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>AngleVar</string>
+        </property>
+        <property name="flags">
+         <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+        </property>
+       </item>
+      </item>
+      <item>
+       <property name="text">
+        <string>Loop</string>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <item>
+        <property name="text">
+         <string>IsLoop</string>
+        </property>
+       </item>
+      </item>
+      <item>
+       <property name="text">
+        <string>Size</string>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <item>
+        <property name="text">
+         <string>EndSize</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>EndSizeVar</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>StartSize</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>StartSizeVar</string>
+        </property>
+       </item>
+      </item>
+      <item>
+       <property name="text">
+        <string>Radius</string>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <item>
+        <property name="text">
+         <string>EndRadius</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>EndRadiusVar</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>RotatePerSecond</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>RotatePerSecondVar</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>StartRadius</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>StartRadiusVar</string>
+        </property>
+       </item>
+      </item>
+      <item>
+       <property name="text">
+        <string>Life</string>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <item>
+        <property name="text">
+         <string>Life</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>LifeVar</string>
+        </property>
+       </item>
+      </item>
+      <item>
+       <property name="text">
+        <string>Position</string>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <item>
+        <property name="text">
+         <string>PositionType</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>PosVarX</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>PosVarY</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SourcePositionX</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SourcePositionY</string>
+        </property>
+       </item>
+      </item>
+      <item>
+       <property name="text">
+        <string>Spin</string>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <item>
+        <property name="text">
+         <string>EndSpin</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>EndSpinVar</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>StartSpin</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>StartSpinVar</string>
+        </property>
+       </item>
+      </item>
+      <item>
+       <property name="text">
+        <string>Mode</string>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <item>
+        <property name="text">
+         <string>Duration</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>EmissionRate</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>IsAutoRemoveOnFinish</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Mode</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>TotalParticles</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>IsFixedRotation</string>
+        </property>
+       </item>
+      </item>
+      <item>
+       <property name="text">
+        <string>Move</string>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <item>
+        <property name="text">
+         <string>GravityAngle</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>GravitySpeed</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>RadialAccel</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>RadialAccelVar</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Speed</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SpeedVar</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>TagentialAccel</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>TagentialAccelVar</string>
+        </property>
+       </item>
+      </item>
+      <item>
+       <property name="text">
+        <string>Texture</string>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <item>
+        <property name="text">
+         <string>DestBlendFunc</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SrcBlendFunc</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>TextureImageData</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>TexturePath</string>
+        </property>
+       </item>
+      </item>
+      <item>
+       <property name="text">
+        <string>Scale</string>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <item>
+        <property name="text">
+         <string>Scale</string>
+        </property>
+       </item>
+      </item>
+      <item>
+       <property name="text">
+        <string>Color</string>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <item>
+        <property name="text">
+         <string>EndColor</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>EndColorVar</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>StartColor</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>StartColorVar</string>
+        </property>
+       </item>
+      </item>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

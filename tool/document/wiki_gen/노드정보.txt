@@ -1,0 +1,25 @@
+=노드정보 매크로=
+
+==정의==
+
+<div style='background-color:#fafafa;border:1px solid #dfdfdf;padding: 5px 10px 5px 10px;'>
+[노드정보 아이디=[[Lnx:paramtype string|문자열]] 타입=[[Lnx:paramtype string|문자열]]]
+</div>
+<br>노드의 정보를 가져옵니다.
+
+==매개변수==
+
+{| class="wikitable"
+| style="width:100px; background-color:#f0f0f0"|매개변수명
+| style="width:100px; background-color:#f0f0f0"|인자타입
+| style="width:100px; background-color:#f0f0f0"|생략가능
+| style="width:100px; background-color:#f0f0f0"|기본값
+| style="background-color:#f0f0f0"|설명
+|-
+|아이디||[[Lnx:paramtype string|문자열]]||불가능||<code>""</code>||정보를 얻어올 노드의 아이디입니다.
+|-
+|타입||[[Lnx:paramtype string|문자열]]||불가능||<code>""</code>||노드에서 얻어올 정보의 종류입니다. 'X좌표', 'Y좌표', '회전값' 중 하나의 값을 가집니다.
+|}
+
+==예제==
+

@@ -1,0 +1,15 @@
+CHANGES.rst
+INSTALL.rst
+LICENSE.txt
+MANIFEST
+MANIFEST.in
+README.rst
+setup.py
+lupa/__init__.py
+lupa/_lupa.c
+lupa/_lupa.pyx
+lupa/lock.pxi
+lupa/lua.pxd
+lupa/version.py
+lupa/tests/__init__.py
+lupa/tests/test.py

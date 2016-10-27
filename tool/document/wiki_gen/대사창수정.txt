@@ -1,0 +1,186 @@
+=대사창수정 매크로=
+
+==정의==
+
+<div style='background-color:#fafafa;border:1px solid #dfdfdf;padding: 5px 10px 5px 10px;'>
+[대사창수정 아이디=[[Lnx:paramtype string|문자열]] 여백=[[Lnx:paramtype scale|크기]] 영역=[[Lnx:paramtype scale|크기]] 위치=[[Lnx:paramtype position|위치]] 행간=[[Lnx:paramtype number|숫자]] 효과=[[Lnx:paramtype string|문자열]] 효과시간=[[Lnx:paramtype number|숫자]] 나타남애니메이션=[[Lnx:paramtype string|문자열]] 사라짐애니메이션=[[Lnx:paramtype string|문자열]] 색상=[[Lnx:paramtype rgba|RGBA]] 이미지=[[Lnx:paramtype image file|이미지파일]] 폰트크기=[[Lnx:paramtype number|숫자]] 폰트색상=[[Lnx:paramtype rgba|RGBA]] 효과음=[[Lnx:paramtype string|문자열]] 폰트=[[Lnx:paramtype font file|폰트파일]] 애니메이션=[[Lnx:paramtype string|문자열]] 커서이미지=[[Lnx:paramtype image file|이미지파일]] 커서크기=[[Lnx:paramtype string|문자열]] 커서색상=[[Lnx:paramtype rgba|RGBA]] 커서애니메이션=[[Lnx:paramtype string|문자열]] 이름창위치=[[Lnx:paramtype position|위치]] 이름창영역=[[Lnx:paramtype scale|크기]] 이름창색상=[[Lnx:paramtype rgba|RGBA]] 이름창이미지=[[Lnx:paramtype image file|이미지파일]] 이름창폰트크기=[[Lnx:paramtype number|숫자]] 이름창폰트색상=[[Lnx:paramtype rgba|RGBA]] 이름창폰트=[[Lnx:paramtype string|문자열]] 연결이미지=[[Lnx:paramtype image file|이미지파일]] 연결색상=[[Lnx:paramtype rgba|RGBA]] 연결넓이맞춤=[[Lnx:paramtype boolean|승락]] 연결선택시이미지=[[Lnx:paramtype image file|이미지파일]] 키입력=[[Lnx:paramtype number|숫자]] 시간=[[Lnx:paramtype number|숫자]] 폰트외곽선=[[Lnx:paramtype string|문자열]] 폰트글로우=[[Lnx:paramtype string|문자열]] 폰트그림자=[[Lnx:paramtype string|문자열]] 이름창폰트외곽선=[[Lnx:paramtype string|문자열]] 이름창폰트그림자=[[Lnx:paramtype string|문자열]] 이름창폰트글로우=[[Lnx:paramtype string|문자열]]]
+</div>
+<br>독백매크로나 대화매크로에 사용되는 UI등을 수정 할 수있습니다. 독백과 대화를 통틀어 대사라고 부릅니다. 대사창을 수정하여 캐릭터별, 상황별 대사창을 만들 수 있습니다.<br><b>‘아이디‘ 매개변수 에 수정하고 싶은 대사창을 입력 할 수 있습니다.</b><ul><li>대화 매크로 에 사용되는 기본창을 수정 하고 싶다면 ‘대화‘</li><li>독백 매크로 에 사용되는 기본창을 수정 하고 싶다면 ‘독백‘</li></ul>
+
+그 이외에 값을 입력하면 새롭게 스타일이 만들어지며, 이렇게 만들어진 스타일은 [[reference:dialog|대화 매크로]] 나 [[reference:monolog|독백 매크로]] 에서 불러와 사용 할 수 있습니다.
+
+==매개변수==
+
+{| class="wikitable"
+| style="width:100px; background-color:#f0f0f0"|매개변수명
+| style="width:100px; background-color:#f0f0f0"|인자타입
+| style="width:100px; background-color:#f0f0f0"|생략가능
+| style="width:100px; background-color:#f0f0f0"|기본값
+| style="background-color:#f0f0f0"|설명
+|-
+|아이디||[[Lnx:paramtype string|문자열]]||불가능||<code>""</code>||대사창의 고유 아이디입니다. 속성을 수정하고 싶은 대사창의 아이디를 전달해야 합니다. ‘대화’나 ‘독백’이 올 수 있습니다. 그 외에 아이디값을 넣을 경우에는 새로운 대화창 스타일이 만들어지고 ‘대화’나 ‘독백’ 매크로의 매개변수인 ‘대사창’에 이 아이디를 넣어 사용 할 수 있습니다.
+|-
+|여백||[[Lnx:paramtype scale|크기]]||가능||<code>"0,0"</code>||매개변수로 전달된 대사창의 위치가 대화 텍스트가 보이게 될 기준입니다. 해당 매개변수로 전달된 여백의 너비와 높이 만큼 위치 에서 여백을 두고 대화 텍스트가 보여지게 됩니다.
+|-
+|영역||[[Lnx:paramtype scale|크기]]||가능||<code>"0,0"</code>||대사창의 영역 크기를 지정할 수 있습니다. 위치 매개변수를 기준으로 영역 매개변수로 넘어온 너비와 높이만큼에만 ‘대화’가 보일수 있습니다.<br>단, 이미지 매개변수가 지정되면 이미지의 크기로 영역이 자동 지정되며 이 매개변수는 무시됩니다.
+|-
+|위치||[[Lnx:paramtype position|위치]]||가능||<code>"0,0"</code>||대사창의 위치를 지정할 수 있습니다. 이미지 매개변수로 들어온 대사창 이미지가 어디서 부터 보일 것인지 지정하게 됩니다.
+|-
+|행간||[[Lnx:paramtype number|숫자]]||가능||<code>0</code>||줄 간격을 지정할 수 있습니다.
+|-
+|효과||[[Lnx:paramtype string|문자열]]||가능||<code>""</code>||대사창이 나타나거나 사라질 때의 애니메이션을 지정할 수 있습니다.
+|-
+|효과시간||[[Lnx:paramtype number|숫자]]||가능||<code>0.25</code>||대사창이 나타나거나 사라질 때의 애니메이션 시간을 지정합니다.
+|-
+|나타남애니메이션||[[Lnx:paramtype string|문자열]]||가능||<code>""</code>||대사창이 나타날 때 FAL로 만든 애니메이션을 지정합니다.
+|-
+|사라짐애니메이션||[[Lnx:paramtype string|문자열]]||가능||<code>""</code>||대사창이 사라질 때 FAL로 만든 애니메이션을 지정합니다.
+|-
+|색상||[[Lnx:paramtype rgba|RGBA]]||가능||<code>"255,255,255,255"</code>||대사창의 색상을 지정할 수 있습니다.
+|-
+|이미지||[[Lnx:paramtype image file|이미지파일]]||가능||<code>""</code>||대사창의 이미지를 지정할 수 있습니다. 확장자를 포함한 이미지의 파일명을 전달해야 합니다.
+|-
+|폰트크기||[[Lnx:paramtype number|숫자]]||가능||<code>30</code>||대사창의 원하는 텍스트의 폰트를 전달해야 합니다.
+|-
+|폰트색상||[[Lnx:paramtype rgba|RGBA]]||가능||<code>"255,255,255,255"</code>||대사창에 표시될 대화 텍스트들의 색상을 지정할 수 있습니다.
+|-
+|효과음||[[Lnx:paramtype string|문자열]]||가능||<code>""</code>||대사창에 글자가 하나씩 뜰 때 효과음을 지정할 수 있습니다.
+|-
+|폰트||[[Lnx:paramtype font file|폰트파일]]||가능||<code>""</code>||대사창에 표시될 대화 텍스트들의 폰트를 지정할 수 있습니다.
+|-
+|애니메이션||[[Lnx:paramtype string|문자열]]||가능||<code>""</code>||FAL 로 만든 애니메이션을 각 '문자'마다 지정 할 수 있습니다.
+|-
+|커서이미지||[[Lnx:paramtype image file|이미지파일]]||가능||<code>""</code>||대사창 커서의 이미지를 지정할 수 있습니다. 확장자를 포함한 이미지의 파일명을 전달해야 합니다.
+|-
+|커서크기||[[Lnx:paramtype string|문자열]]||가능||<code>"30,20"</code>||대사창에 나오는 커서의 크기을 지정할 수 있습니다.
+|-
+|커서색상||[[Lnx:paramtype rgba|RGBA]]||가능||<code>"255,255,255,255"</code>||대사창에 나오는 커서의 색상을 지정할 수 있습니다.
+|-
+|커서애니메이션||[[Lnx:paramtype string|문자열]]||가능||<code>""</code>||FAL로 만든 애니메이션을 커서에 지정 할 수 있습니다.
+|-
+|이름창위치||[[Lnx:paramtype position|위치]]||가능||<code>"0,0"</code>||이름창의 위치를 지정할 수 있습니다.
+|-
+|이름창영역||[[Lnx:paramtype scale|크기]]||가능||<code>"50,50"</code>||이름창의 영역 크기를 지정할 수 있습니다. 이름창위치 매개변수를 기준으로 이름창영역 매개변수로 넘어온 너비와 높이 만큼만 ‘이름’이 보일수 있습니다
+|-
+|이름창색상||[[Lnx:paramtype rgba|RGBA]]||가능||<code>"255,255,255,255"</code>||이름창의 색상을 지정 할 수 있습니다.
+|-
+|이름창이미지||[[Lnx:paramtype image file|이미지파일]]||가능||<code>""</code>||이름창에 이미지를 지정 할 수 있습니다.
+|-
+|이름창폰트크기||[[Lnx:paramtype number|숫자]]||가능||<code>30</code>||이름창에 표시될 이름 텍스트의 폰트 크기를 지정할 수 있습니다.
+|-
+|이름창폰트색상||[[Lnx:paramtype rgba|RGBA]]||가능||<code>"255,255,255,255"</code>||이름창에 표시될 이름 텍스트의 색상을 지정할 수 있습니다.
+|-
+|이름창폰트||[[Lnx:paramtype string|문자열]]||가능||<code>""</code>||이름창에 표시될 이름 텍스트의 폰트를 지정할 수 있습니다.
+|-
+|연결이미지||[[Lnx:paramtype image file|이미지파일]]||가능||<code>""</code>||연결 선택지의 기본 이미지를 지정할 수 있습니다. 확장자를 포함한 이미지의 파일명을 전달해야 합니다.
+|-
+|연결색상||[[Lnx:paramtype rgba|RGBA]]||가능||<code>"255,255,255,255"</code>|| 매개변수를 사용하기 위해선 연결이미지 와 연결선택시이미지 를 지정하면 안됩니다. 연결색상 을 지정해주면 각각의 선택지 텍스트에 배경색이 입혀지게 됩니다
+|-
+|연결넓이맞춤||[[Lnx:paramtype boolean|승락]]||가능||<code>"아니오"</code>||선택지 분기의 너비를 동일하게 맞춰 줄것인지에 대해 지정할 수 있습니다.
+|-
+|연결선택시이미지||[[Lnx:paramtype image file|이미지파일]]||가능||<code>""</code>||연결 선택지를 선택 하였을 경우의 이미지를 지정할 수 있습니다. 확장자를 포함한 이미지의 파일명을 전달해야 합니다.
+|-
+|키입력||[[Lnx:paramtype number|숫자]]||가능||<code>59</code>||터치 나 스페이스키 이외의 키로 대사를 넘길 수 있도록 지정 할 수 있습니다.
+|-
+|시간||[[Lnx:paramtype number|숫자]]||가능||<code>0.02</code>||문자열이 출력에 사용되는 시간입니다. 1글자마다 발생하는 시간간격입니다.
+|-
+|폰트외곽선||[[Lnx:paramtype string|문자열]]||가능||<code>"255,255,255,255,1"</code>||텍스트에 외곽선을 생성합니다. 값은 '그림자색상R,그림자색상G,그림자색상B,그림자색상A,외곽선크기'
+|-
+|폰트글로우||[[Lnx:paramtype string|문자열]]||가능||<code>"255,255,255,255"</code>||텍스트에 글로우를 생성합니다. 값은 '그림자색상R,그림자색상G,그림자색상B,그림자색상A'
+|-
+|폰트그림자||[[Lnx:paramtype string|문자열]]||가능||<code>"255,255,255,255,1,1"</code>||텍스트에 그림자를 생성합니다. 값은 '그림자색상R,그림자색상G,그림자색상B,그림자색상A,그림자위치X,그림자위치Y'
+|-
+|이름창폰트외곽선||[[Lnx:paramtype string|문자열]]||가능||<code>"255,255,255,255,1"</code>||텍스트에 외곽선을 생성합니다. 값은 '그림자색상R,그림자색상G,그림자색상B,그림자색상A,외곽선크기'
+|-
+|이름창폰트그림자||[[Lnx:paramtype string|문자열]]||가능||<code>"255,255,255,255,1,1"</code>||텍스트에 그림자를 생성합니다. 값은 '그림자색상R,그림자색상G,그림자색상B,그림자색상A,그림자위치X,그림자위치Y'
+|-
+|이름창폰트글로우||[[Lnx:paramtype string|문자열]]||가능||<code>"255,255,255,255"</code>||텍스트에 글로우를 생성합니다. 값은 '그림자색상R,그림자색상G,그림자색상B,그림자색상A'
+|}
+
+==예제==
+
+===예제1 - 기본 ===
+
+아래와 같이 동일 아이디의 대사창 속성을 여러번에 걸쳐 나누어 적용하면 스크립트를 훨씬 보기 편하게 작성할 수 있습니다.
+
+<lnx># 대화 매크로 대사창 수정
+[대사창수정 아이디="대화" 이미지="textArea.png" 색상="255,255,255,255" 위치="0,720" 영역="1070,200"  여백="100,60" ]
+[대사창수정 아이디="대화" 이름창이미지="nameLabel.png" 이름창색상="255,255,255,255" 이름창위치="30,500" 이름창폰트크기="40"  이름창폰트색상="97,68,36,255" ]
+
+# 독백 매크로 대사창 수정
+[대사창수정 아이디="독백" 이미지="largeTextArea.png" 위치="0,720" 여백="100,100" 영역="1080,520"  색상="255,255,255,255"]
+[대사창수정 아이디="독백" 연결이미지="unselect.png" 연결선택시이미지="select.png" 연결색상="255,255,255,255" 연결넓이맞춤="예"]
+
+# 대화 매크로 대사창 일부 속성 수정
+대사창수정.아이디 = "대화"
+대사창수정.이름창색상 = "125,0,125,255"
+대사창수정.이름창폰트크기 = "20"
+[대사창수정]</lnx>
+
+
+===예제2 - 연결 관련 매개변수===
+
+<code>연결이미지</code>, <code>연결색상</code> , <code>연결넓이맞춤</code> , <code>연결선택시이미지</code> 와 같은 연결 관련 매개변수를 사용하면 아래와 같은 선택지 관련 화면을 구성 할 수 있습니다. 
+
+아래는 피니엔진에 기본적으로 같이 제공되는 ‘집나간 멍구’ 예제의 한부분을 참조 하였습니다.
+
+<lnx>[대사창수정 아이디="독백" 연결이미지="unselect.png" 연결선택시이미지="select.png" 연결색상="255,0,0,255" 연결넓이맞춤="예" ]
+
+[독백]
+;근처에 사는 사람들 부터 한번씩 찾아가 물어보자.
+;어디부터 가볼까?
+;<공백 0><자간 0><행간 20>
+;<공백 350><연결 "선택지_체육선생님"><크기 40> 체육선생님에게 가본다.</크기></연결>
+;<공백 350><연결 "선택지_미술선생님"><크기 40> 미술선생님에게 가본다.</크기></연결>
+;<공백 390><연결 "선택지_복도"><크기 40> 복도를 둘러본다.</크기></연결></lnx>
+
+http://i.imgur.com/IE06iTD.png
+
+
+
+===예제3 - 연결넓이맞춤 매개변수===
+
+<code>연결넓이맞춤</code> 매개변수는 [[reference:monolog|독백 매크로]] 를 사용하여 선택지 분기를 만들었을때 선택지의 표시하는 영역을 동일하게 맞춰 줄것인지에 대한 인자입니다.
+
+아래는 피니엔진에 기본적으로 같이 제공되는 ‘집나간 멍구’ 예제의 한부분을 참조 하였습니다.
+
+아래 그림은 연결넓이맞춤 매개변수로 <code>"예"</code>를 전달했을 경우의 예입니다.
+
+http://i.imgur.com/IVgJjhW.png
+
+또한 아래 사진은 <code>"아니오"</code>를 전달했을 경우의 예입니다.
+
+http://i.imgur.com/IcHGySp.png
+
+
+
+===예제4 - 연결이미지,연결선택시이미지 매개변수 ===
+
+<code>연결이미지</code>, <code>연결선택시이미지</code> 매개변수는 [[reference:monolog|독백 매크로]] 를 사용하여 선택지 분기를 만들었을때 선택지에 대한 이미지 입니다. 
+
+샘플 ‘집나간 멍구’에 있는 리소를 참고하여 설명 드리겠습니다.
+
+http://i.imgur.com/kQ3Kc4Y.png
+
+http://i.imgur.com/u9wKcgF.png
+
+위의 두 이미지를 각각 <code>연결이미지</code> , <code>연결선택시이미지</code> 매개변수로 전달했다면 아래와 같은 화면으로 확인할 수 있습니다. 
+
+아래 그림은 가장 위의 선택지를 마우스로 한번 클릭한 경우 입니다. 
+
+그림에서 보이듯이 선택지가 <code>연결선택시이미지</code> 매개변수로 전달한 이미지로 깜빡이는 모습을 확인할수 있습니다.
+
+
+http://i.imgur.com/MubA7Zc.gif
+
+
+===예제5 - 연결색상 매개변수 ===
+
+<code>연결색상</code> 매개변수는  [[reference:monolog|독백 매크로]] 를 사용하여 선택지 분기를 만들었을때 이미지 대신 단색으로 꾸밀수 있습니다.
+
+이를 사용하기 위해선 <code>연결이미지</code> 매개변수와 <code>연결선택시이미지</code> 매개변수를 이용하여 선택지 연결 이미지를 정해두면 안됩니다.
+
+<code>연결색상</code> 매개변수에 <code>"255,50,50,80"</code> 라는 값을 전달하면 아래와 같이 확인할 수 있습니다.
+
+
+http://i.imgur.com/q0MshYh.gif

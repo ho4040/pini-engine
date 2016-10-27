@@ -1,0 +1,31 @@
+=키입력 매크로=
+
+==정의==
+
+<div style='background-color:#fafafa;border:1px solid #dfdfdf;padding: 5px 10px 5px 10px;'>
+[키입력 아이디=[[Lnx:paramtype string|문자열]] 매크로=[[Lnx:paramtype marco list|함수목록]]]
+</div>
+<br>입력이 발생했을 때 특정 매크로를 호출하게 합니다. 지정한 매크로를 해제하고 싶다면, 키입력해제 매크로 를 사용하세요.
+
+==매개변수==
+
+{| class="wikitable"
+| style="width:100px; background-color:#f0f0f0"|매개변수명
+| style="width:100px; background-color:#f0f0f0"|인자타입
+| style="width:100px; background-color:#f0f0f0"|생략가능
+| style="width:100px; background-color:#f0f0f0"|기본값
+| style="background-color:#f0f0f0"|설명
+|-
+|아이디||[[Lnx:paramtype string|문자열]]||불가능||<code>""</code>||키입력 매크로의 고유값 입니다. 키입력해제 매크로등에 이용됩니다.
+|-
+|매크로||[[Lnx:paramtype marco list|함수목록]]||불가능||<code>""</code>||지정한 매크로를 실행합니다.
+|}
+
+==예제==
+
+<lnx>@매크로 키보드:
+ [텍스트 아이디="입력내용1" x=100 y=100 내용=키입력.값 ]
+ [텍스트 아이디="입력내용2" x=100 y=120 내용=키입력.누름 ]
+ [텍스트 아이디="입력내용3" x=100 y=140 내용=키입력.x ]
+ [텍스트 아이디="입력내용4" x=100 y=160 내용=키입력.y ]
+[키입력 매크로="키보드" 아이디="키"]</lnx>
