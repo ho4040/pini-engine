@@ -137,7 +137,7 @@ function ScreenReSize(width,height)
 		if targetPlatform == kTargetWindows then
 			glview:setFrameSize(width , height)
 		end
-		glview:setDesignResolutionSize(width , height, cc.ResolutionPolicy.EXACT_FIT)
+		glview:setDesignResolutionSize(width , height, cc.ResolutionPolicy.SHOW_ALL
 	end
 
 	WIN_WIDTH = width
