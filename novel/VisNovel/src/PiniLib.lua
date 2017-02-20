@@ -218,9 +218,11 @@ function LNX_IMAGE(vm,stck)
 	local keep = vm:ARGU("이미지","유지","아니오") == "예"
 	local angle = vm:ARGU("이미지","회전",0)
 	local enableAnti = vm:ARGU("이미지","안티","예")
+	local z = vm:ARGU("이미지","z",nil)
 
 	x = tonumber(x)
 	y = tonumber(y)
+	z = tonumber(z)
 	angle = tonumber(angle)
 
 	local acp = _LNXG["설정.이미지중심"] or "0.5,0.5"
@@ -276,7 +278,16 @@ function LNX_IMAGE(vm,stck)
 		else
 			node:setPosition(StrEnumToPos(node,pos))
 		end
-
+		
+		if z then
+                        node:setZ(z)
+                        if type(connect)=="string" then
+                        node.touchPriority = 9999999
+                        else
+                        node.touchPriority = z
+                        end
+                end
+		
 		local c = color:explode(",")
 		if GUI then
 			node:setZ(9999999)
@@ -334,6 +345,7 @@ function LNX_TEXT(vm,stck)
 	local align = vm:ARGU("텍스트","정렬","중앙")
 	local x = vm:ARGU("텍스트","x","")
 	local y = vm:ARGU("텍스트","y","")
+	local z = vm:ARGU("텍스트","z",nil)
 	local flip = vm:ARGU("텍스트","반전","")
 	local isPreserve = vm:ARGU("텍스트","항상표시","아니오")
 	local outline = vm:ARGU("텍스트","외곽선",nil)--"r,g,b,a,w"
@@ -351,6 +363,7 @@ function LNX_TEXT(vm,stck)
 
 	x = tonumber(x)
 	y = tonumber(y)
+	z = tonumber(z)
 	
 	GUI = GUI=="예"
 	screenshot = screenshot=="예"
@@ -380,7 +393,10 @@ function LNX_TEXT(vm,stck)
 		else
 			node:setPosition(StrEnumToPos(node,pos))
 		end
-		
+		if z then
+                        node:setZ(z)
+                        node.touchPriority = z
+                end
 
 		if align == "왼쪽" then
 			node:setAnchorPoint(0,0.5)
@@ -437,7 +453,6 @@ function LNX_TEXTINPUT(vm,stck)
 	x = tonumber(x)
 	y = tonumber(y)
 	max = tonumber(max) or 0
-
 	password = password == "예"
 
 	if max == 0 then
@@ -490,6 +505,7 @@ function LNX_SLIDER(vm,stck)
 	local read = vm:ARGU("슬라이더","읽기전용","아니오") == "예"
 	local x = vm:ARGU("슬라이더","x",nil)
 	local y = vm:ARGU("슬라이더","y",nil)
+	local z = vm:ARGU("슬라이더","z",nil)
 	local img1 = vm:ARGU("슬라이더","빈칸이미지",nil)
 	local img2 = vm:ARGU("슬라이더","채움이미지",nil)
 	local img3 = vm:ARGU("슬라이더","앵커이미지",nil)
@@ -499,6 +515,7 @@ function LNX_SLIDER(vm,stck)
 
 	x = tonumber(x)
 	y = tonumber(y)
+	z = tonumber(z)
 	val = tonumber(val) or 0
 
 	id = tostring(id) or ""
@@ -528,7 +545,10 @@ function LNX_SLIDER(vm,stck)
 			node:setPosition(StrEnumToPos(node,pos))
 		end
 		node:setIncludeScreenShot(screenshot)
-
+		if z then
+                        node:setZ(z)
+                        node.touchPriority = z
+                end
 		if GUI then
 			node:setZ(9999999)
 			node.touchPriority = GUI_PRIORITY
@@ -623,6 +643,8 @@ function LNX_GET_NODEINFO(vm,stck)
 
 	if node then
 		local x, y = node:position()
+		--local z = node:getPositionZ()
+		--local isOnDisplay = node:isVisable()
 		local rot = node:getRotate()
 		
 		if _type == "X좌표" then
@@ -631,6 +653,10 @@ function LNX_GET_NODEINFO(vm,stck)
 			vm:returnValue(y)
 		elseif _type == "회전값" then
 			vm:returnValue(rot)
+		--[[
+		elseif _type == "표시여부" then
+			vm:returnValue(isOnDisplay)
+		--]]
 		end
 	end
 end
@@ -660,12 +686,14 @@ function LNX_TOUCHAREA(vm,stck)
 	local connect = vm:ARGU("터치영역","북마크이동","")
 	local x = vm:ARGU("터치영역","x","")
 	local y = vm:ARGU("터치영역","y","")
+	local z = vm:ARGU("터치영역","z",nil)
 	local GUI = vm:ARGU("터치영역","GUI","아니오")
 
 	GUI = GUI=="예"
 
 	x = tonumber(x)
 	y = tonumber(y)
+	z = tonumber(z)
 
 	local op = 0
 	if OnPreview then
@@ -684,7 +712,10 @@ function LNX_TOUCHAREA(vm,stck)
 	node.onTouchUp = function(location,self)
 		pini.XVM:GotoBookmarkNewCall(self.connect)
 	end
-
+	if z then
+		node:setZ(z)
+		node.touchPriority = z
+	end
 	if GUI then
 		node:setZ(9999999)
 		node.touchPriority = GUI_PRIORITY
@@ -917,7 +948,7 @@ function LNX_VIBRATE(vm,stck)
 	if OnPreview then
 	else
 		if cc.PLATFORM_OS_ANDROID == CurrentPlatform then
-			--DeviceNativeCall("Device_Vibrator",{ sec })
+			DeviceNativeCall("Device_Vibrator",{ sec })
 		end
 	end
 end
