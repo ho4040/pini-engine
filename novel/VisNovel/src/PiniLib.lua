@@ -218,7 +218,7 @@ function LNX_IMAGE(vm,stck)
 	local keep = vm:ARGU("이미지","유지","아니오") == "예"
 	local angle = vm:ARGU("이미지","회전",0)
 	local enableAnti = vm:ARGU("이미지","안티","예")
-
+	local cut = vm:ARGU("이미지","스프라이트맵","")
 	x = tonumber(x)
 	y = tonumber(y)
 	angle = tonumber(angle)
@@ -267,7 +267,10 @@ function LNX_IMAGE(vm,stck)
 
 			pini:AttachDisplay(node,parent)
 		end
-
+		if cut then --this adds function to Supporting Sprite image map
+			local cutinfo = cut:explode(",")
+			ClippingNode.setClippingSize(tonumber(cutinfo[1] or 0),tonumber(cutinfo[2] or 0),tonumber(cutinfo[3]),tonumber(cutinfo[4]))
+		end
 		node:setBlendMode(blendMode)
 		node:setAnchorPoint(acp[1] or 0.5,1-(acp[2] or 0.5))
 		node:setScale(StrEnumToScale(node,size))
