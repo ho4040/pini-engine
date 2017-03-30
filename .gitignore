@@ -1,0 +1,7 @@
+*.pyc
+Editor/pini/errorout.txt
+Editor/pini/ERROR_LOG.txt
+Editor/pini/parser.out
+Editor/pini/parsetab.py
+Editor/pini/atl.so
+proj.sublime-workspace

@@ -655,12 +655,12 @@ OutFile "installer.exe" ; 설치 파일 이름
 			APPPATH = ""
 			if sys.platform == "darwin" : 
 				if config.__RELEASE__ == False : 
-					APPPATH = "../../novel/OSX.app"
+					APPPATH = "../../Engine/OSX.app"
 				else : 
 					APPPATH = "OSX.app"
 			else :
 				if config.__RELEASE__ == False : 
-					APPPATH = "../../novel/window64/"
+					APPPATH = "../../Engine/window64/"
 				else : 
 					APPPATH = "window/"
 

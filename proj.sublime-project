@@ -1,0 +1,54 @@
+{
+	"folders":
+	[
+		
+		{
+			"file_exclude_patterns":
+			[
+				"bundle.js",
+				"bundle.js.map",
+				"*.min.js",
+				"*.min.css",
+				"*.css",
+				"*.sublime-project",
+				"*.pyc",
+				"*.pyo",
+				"*.exe",
+				"*.dll",
+				"*.obj",
+				"*.o",
+				"*.a",
+				"*.lib",
+				"*.so",
+				"*.dylib",
+				"*.ncb",
+				"*.sdf",
+				"*.suo",
+				"*.pdb",
+				"*.idb",
+				".DS_Store",
+				"*.class",
+				"*.psd",
+				"*.db",
+				"*.sublime-workspace",
+				"*.xcodeproj",
+				".*"
+			],
+			"folder_exclude_patterns":
+			[
+				"node_modules",
+				"build",
+				".svn",
+				".git",
+				".hg",
+				"CVS",
+				"bin",
+				"*.xcodeproj",
+				"android",
+				"ios",
+				"module"
+			],
+			"path": "."
+		}
+	]
+}

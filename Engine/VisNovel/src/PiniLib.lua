@@ -46,6 +46,7 @@ end
 
 local JavaClassName = "org/cocos2dx/lua/AppActivity"
 function DeviceNativeCall(func,args,sig)
+	print(func,args,sig)
 	local ok,ret  = luaj.callStaticMethod(JavaClassName,func,args,sig)
 	if not ok then
 		print("luaj error:", ret)

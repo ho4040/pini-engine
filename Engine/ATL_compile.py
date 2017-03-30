@@ -36,7 +36,7 @@ arg = [
 	"-I", myjoin(cwd,"VisNovel/frameworks/runtime-src/Classes"),
 	myjoin(cwd,"VisNovel/frameworks/runtime-src/Classes/ATL.cpp"),
 	myjoin(cwd,"VisNovel/frameworks/runtime-src/Classes/utils.cpp"),
-	"-o", myjoin(cwd,"../User/pini/atl.so")
+	"-o", myjoin(cwd,"../Editor/pini/atl.so")
 ]
 
 

@@ -429,12 +429,12 @@ def __run__(clean,isCurrentScene,startLine=None):
 	APPPATH = ""
 	if sys.platform == "darwin" : 
 		if config.__RELEASE__ == False : 
-			APPPATH = "../../novel/OSX.app"
+			APPPATH = "../../Engine/OSX.app"
 		else : 
 			APPPATH = "OSX.app"
 	else :
 		if config.__RELEASE__ == False : 
-			APPPATH = "../../novel/window64"
+			APPPATH = "../../Engine/window64"
 			try:
 				shutil.rmtree(APPPATH + "/src")
 			except Exception, e:

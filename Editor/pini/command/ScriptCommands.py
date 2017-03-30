@@ -339,7 +339,7 @@ class ScriptGraphicsProtocol(object):
 		self.XVM = None
 
 		if config.__RELEASE__ == False :
-			self.lua.execute("package.path = package.path .. ';../../novel/VisNovel/src/?.lua;'")
+			self.lua.execute("package.path = package.path .. ';../../Engine/VisNovel/src/?.lua;'")
 		else:
 			self.lua.execute("package.path = package.path .. ';./lua/src/?.lua;'")
 			self.lua.execute("package.path = package.path .. ';./lua/?.lua;'")
