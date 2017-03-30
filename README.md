@@ -46,13 +46,13 @@ LNX의 형태는 아래와 같습니다.
 #### 필요 
 1. python 2.7 (32-bit)
 2. pip
-..* [PIL](http://effbot.org/downloads/PIL-1.1.7.win32-py2.7.exe)
-..* pillow
+⋅⋅* [PIL](http://effbot.org/downloads/PIL-1.1.7.win32-py2.7.exe)
+⋅⋅* pillow
 3. [MinGW](https://sourceforge.net/projects/mingw/files/Installer/) (window only)
-..* [g++](http://studymake.tistory.com/385) 
+⋅⋅* [g++](http://studymake.tistory.com/385) 
 4. (Lua for window)[https://github.com/rjpcomputing/luaforwindows/releases]
-..* 설치 후 c:\Program Files (x86)\lua\5.1\lib\ 폴더 내용물 복사 후 C:\python27\libs\에 붙혀넣기
-..* 설치 후 c:\Program Files (x86)\lua\5.1\include\ 폴더 내용물 복사 후 C:\python27\include\에 붙혀넣기
+⋅⋅* 설치 후 c:\Program Files (x86)\lua\5.1\lib\ 폴더 내용물 복사 후 C:\python27\libs\에 붙혀넣기
+⋅⋅* 설치 후 c:\Program Files (x86)\lua\5.1\include\ 폴더 내용물 복사 후 C:\python27\include\에 붙혀넣기
 5. [vcpython27](http://aka.ms/vcpython27)
 
 ```bash
