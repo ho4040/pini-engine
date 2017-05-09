@@ -75,4 +75,55 @@ python main.py
 
 빌드 - 피니리모트
 -------------
-작성중
+#### 필요 
+1. [visual studio 2013 community](http://go.microsoft.com/?linkid=9863609)
+
+#### 빌드
+1. "/Engine/VisNovel/frameworks/runtime-src/proj.win32/pini_remote.sln"파일을 엽니다.
+2. Visual studio의 빌드버튼을 눌러 빌드를 시작함.
+3. 빌드가 완료되면 "/Engine/VisNovel/frameworks/runtime-src/classes/ffmpeg/lib/window/*.dll" 파일들을 "/Engine/VisNovel/frameworks/runtime-src/proj.win32/Debug.win32/"로 복사. 
+4. visual studio에서 프로젝트 실행
+
+#### 피니엔진 에디터에 적용하여 테스트하기
+1. "/Engine/VisNovel/frameworks/runtime-src/proj.win32/Debug.win32/"폴더 내의 dll파일과 exe파일을 "/Engine/window64/"으로 복사
+2. "/Editor/pini/run.cmd" 파일 실행
+
+빌드 - APK
+--------------
+#### 필요
+1. [android-sdk-tool](https://dl.google.com/android/repository/sdk-tools-windows-3859397.zip)
+2. [ant](http://theeye.pe.kr/archives/1334)
+3. android-ndk-r10d
+  * [Windows 32-bit](http://dl.google.com/android/ndk/android-ndk-r10d-windows-x86.exe)
+  * [Windows 64-bit](http://dl.google.com/android/ndk/android-ndk-r10d-windows-x86_64.exe)
+4. [cocos2d-x-3.9](http://www.cocos2d-x.org/filedown/cocos2d-x-3.9.zip)
+
+#### 빌드
+```bash
+cd cocos2d-x
+
+python setup.py
+
+# android sdk, ant, ndk 경로 설정.
+
+cd pini-engine/Engine/
+python android_compile.py
+```
+
+피니엔진 배포 빌드
+-------------
+```bash
+cd Editor
+
+python dist_pini.py
+```
+
+
+작업 된 내용
+1. 인앱결제 안되던 문제 수정
+2. android api 버전 14로 수정
+3. 윈도우 익스포트 후 한글명일 때 저장이 제대로 안되던 문제 수정
+4. 기기테스트가 되지 않던 문제 수정
+5. 로컬푸시로 앱 진입 시 튕기는 문제 수정
+6. 깃헙 연결 메뉴 추가
+7. 후원자 리스트 메뉴 추가

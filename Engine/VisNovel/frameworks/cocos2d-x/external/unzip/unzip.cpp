@@ -69,7 +69,7 @@
 #include <string.h>
 
 #ifndef NOUNCRYPT
-        //#define NOUNCRYPT
+        #define NOUNCRYPT
 #endif
 
 #include "zlib.h"
@@ -1660,7 +1660,7 @@ int ZEXPORT unzOpenCurrentFile3 (unzFile file, int* method,
     if (password != NULL)
     {
         int i;
-        s->pcrc_32_tab = (const unsigned long*)get_crc_table();
+        s->pcrc_32_tab = get_crc_table();
         init_keys(password,s->keys,s->pcrc_32_tab);
         if (ZSEEK64(s->z_filefunc, s->filestream,
                   s->pfile_in_zip_read->pos_in_zipfile +

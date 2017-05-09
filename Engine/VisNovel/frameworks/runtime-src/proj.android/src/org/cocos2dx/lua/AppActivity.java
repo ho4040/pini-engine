@@ -309,7 +309,6 @@ public class AppActivity extends Cocos2dxActivity implements IDownloaderClient{
             hash = PUBLIC_KEY;
         }
         final String base64EncodedPublicKey = hash;//"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApGNrMQelP74XGKv5nJ87eZiKpv67+TvyiDyTkJrNBLLIFWlaoCyUuRlV44sb+LwmOQ08QVFIef14TNFWsSgKf28oLq/OcDgaWrs6L4WTVEW+WwOLjT5lFYufbpopgsNCt51H0to3nCVLT17En14VLcw41uxhpNPbydDdzgxXzhcnfQ9J3wmqO8GoGhN5PTD7RRMhjPzsE6gTYAO2GMtklGl2wc3Xn+QnhqKL0V29BfAtsWhQST1cMzX+PL1Z85n8QRHiLXqVn2nMO8LFZ/7lGSSl8jXAv06coqcY4aO5idv/I/tGFIRzE0bB82x3MlORlZx6zMzhjVC8v3pxN2MbewIDAQAB";
-
         mHelper = new IabHelper(this, base64EncodedPublicKey);
         mHelper.enableDebugLogging(true);
         mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
@@ -324,6 +323,7 @@ public class AppActivity extends Cocos2dxActivity implements IDownloaderClient{
 
     //구매메서드 입니다.
     public void _IAB_Buy(String id_item) {
+        // Toast.makeText(AppActivity.this, "~~~~~~~~~~~~~~~~~~~~~~~~",Toast.LENGTH_SHORT).show();
         final String _id_item = id_item;
         // Var.ind_item = index;
         this.runOnUiThread(new Runnable() {
@@ -751,7 +751,7 @@ public class AppActivity extends Cocos2dxActivity implements IDownloaderClient{
 
     public static void HideSoftKey(){
         View decorView = AppActivity._this.getWindow().getDecorView();
-		int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN;
+		int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION ;//| View.SYSTEM_UI_FLAG_FULLSCREEN;
 		decorView.setSystemUiVisibility(uiOptions);
     }
 

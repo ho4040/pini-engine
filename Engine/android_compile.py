@@ -90,7 +90,8 @@ def compile_run(debug=False,repeat=True,TestRun=False, suffix=".apk", b=False):
 
 		#"com.nooslab.pini_remote"
 
-		print os.system("cocos compile -s "+myjoin(cwd,"VisNovel")+" -p android -m "+str_mode+" --ap android-16 --compile-script 0")
+		print "cocos compile -s "+myjoin(cwd,"VisNovel")+" -p android -m "+str_mode+" --ap android-14 --compile-script 0"
+		print os.system("cocos compile -s "+myjoin(cwd,"VisNovel")+" -p android -m "+str_mode+" --ap android-14 --compile-script 0")
 
 		newapk = myjoin(cwd,"android","PiniRemote"+suffix)
 
@@ -116,7 +117,7 @@ def compile_run(debug=False,repeat=True,TestRun=False, suffix=".apk", b=False):
 				print os.system(adbpath+" uninstall com.nooslab.pini_remote_landscape")
 				print os.system(adbpath+" install "+newapk)
 				print os.system(adbpath+" shell am start -a android.intent.action.MAIN -n com.nooslab.pini_remote_landscape/org.cocos2dx.lua.AppActivity")
-				print os.system(adbpath+' logcat | findstr "cocos2d-x"')
+				print os.system('adb logcat | findstr "cocos2d-x"')
 			else:
 				print os.system("E:\\android-sdk-windows\\platform-tools\\adb.exe uninstall com.nooslab.pini_remote")
 				print os.system("E:\\android-sdk-windows\\platform-tools\\adb.exe install "+newapk)

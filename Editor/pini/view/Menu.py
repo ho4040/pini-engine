@@ -27,6 +27,7 @@ from view.Export_Windows import ExportWindowsWindow
 from view.SceneScriptWindow import SceneScriptWindowManager
 from view.AboutPiniWindow import AboutPiniWindow
 from view.CompileProgressWindow import CompileProgressWindow
+from view.FundingListWindow import FundingListWindow
 
 from command.FontManager import FontManager
 
@@ -607,9 +608,9 @@ def CurrentScriptCursorRun():
 	else:
 		TestRun()
 
-@MenuBar("도움말(&H)/공식 홈페이지(&H)")
+@MenuBar("도움말(&H)/오픈 소스 프로젝트(&H)")
 def OpenOfficialSite():
-	QDesktopServices.openUrl(QUrl("http://nooslab.com/piniengine"))
+	QDesktopServices.openUrl(QUrl("https://github.com/ho4040/pini-engine"))
 
 @MenuBar("도움말(&H)/공식 가이드 문서(&G)",QKeySequence.HelpContents)
 def OpenOfficialGuide():
@@ -618,6 +619,14 @@ def OpenOfficialGuide():
 		activeSceneScriptWindow.editor.showReference()
 	else:
 		QDesktopServices.openUrl(QUrl("http://nooslab.com/piniengine/wiki"))
+
+@MenuBar("도움말(&H)/오픈소스 후원자 리스트")
+def FundingListScreen():
+	inst = ProjectController()
+	if len(inst.path) == 0 : 
+		return
+		
+	FundingListWindow(NoriterMain()).exec_()
 
 @MenuBar("도움말(&H)/피니엔진에 대하여(&P)...")
 def OpenAboutScreen():

@@ -22,7 +22,7 @@ class AboutPiniWindow(ModalWindow):
 
 	@LayoutGUI
 	def GUI(self):
-		self.Layout.label(self.trUtf8("<b>피니엔진 v0.2-rc1</b>"))
+		self.Layout.label(self.trUtf8("<b>피니엔진 오픈소스 버전</b>"))
 
 		compilerVersion = ""
 		try:
@@ -56,7 +56,7 @@ class AboutPiniWindow(ModalWindow):
 				# self.Layout.label(self.trUtf8(""))
 				# self.Layout.label(self.trUtf8(""))
 				pass
-
+				
 	def Modified(self):
 		self.modify = True
 		self.close()

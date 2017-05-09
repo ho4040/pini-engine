@@ -49,7 +49,7 @@ try:
 	if len(cwd) == 0:
 		cwd = "."
 
-	sys.path.append(myjoin(cwd,"..","novel"))
+	sys.path.append(myjoin(cwd,"..","Engine"))
 	from android_compile import compile_run
 	from android_compile import orientation_portrait
 	from android_compile import orientation_landscape
@@ -82,8 +82,8 @@ try:
 
 		shutil.copytree(myjoin(os.curdir,"resource"),myjoin(dist_root,"resource"))
 		shutil.copytree(myjoin(os.curdir,"imageformats"),myjoin(dist_root,"imageformats"))
-		shutil.copytree(myjoin(os.pardir,os.pardir,"novel","VisNovel","src"), myjoin(dist_root,"lua"))
-		shutil.copytree(myjoin(os.pardir,os.pardir,"novel","window64"), myjoin(dist_root,"window"))
+		shutil.copytree(myjoin(os.pardir,os.pardir,"Engine","VisNovel","src"), myjoin(dist_root,"lua"))
+		shutil.copytree(myjoin(os.pardir,os.pardir,"Engine","window64"), myjoin(dist_root,"window"))
 		
 		try:
 			shutil.rmtree(myjoin(dist_root,"window","src"))
@@ -93,8 +93,8 @@ try:
 			shutil.rmtree(myjoin(dist_root,"window","res"))
 		except Exception, e:
 			pass
-		shutil.copytree(myjoin(os.pardir,os.pardir,"novel","VisNovel","src"),myjoin(dist_root,"window","src"))
-		shutil.copytree(myjoin(os.pardir,os.pardir,"novel","VisNovel","res"),myjoin(dist_root,"window","res"))
+		shutil.copytree(myjoin(os.pardir,os.pardir,"Engine","VisNovel","src"),myjoin(dist_root,"window","src"))
+		shutil.copytree(myjoin(os.pardir,os.pardir,"Engine","VisNovel","res"),myjoin(dist_root,"window","res"))
 
 		# launcher lua compile - dist_root+"\\window\\src"
 		launcher_lua = myjoin(dist_root,"window","src")
@@ -126,8 +126,8 @@ try:
 		shutil.rmtree(apkdistpath)
 		os.mkdir(apkdistpath)
 
-		srcapk1 = myjoin(dist_root,"..","..","novel","android","PiniRemote-portrait.apk")
-		srcapk2 = myjoin(dist_root,"..","..","novel","android","PiniRemote-landscape.apk")
+		srcapk1 = myjoin(dist_root,"..","..","Engine","android","PiniRemote-portrait.apk")
+		srcapk2 = myjoin(dist_root,"..","..","Engine","android","PiniRemote-landscape.apk")
 		distapk1= myjoin(apkdistpath,"PiniRemote-portrait.apk")
 		distapk2= myjoin(apkdistpath,"PiniRemote-landscape.apk")
 
