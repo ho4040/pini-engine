@@ -127,3 +127,44 @@ python dist_pini.py
 5. 로컬푸시로 앱 진입 시 튕기는 문제 수정
 6. 깃헙 연결 메뉴 추가
 7. 후원자 리스트 메뉴 추가
+
+
+메모 
+py2exe 탓인지 다른 모듈 버전업되서인지 
+inspect.py 에서 could not get source code 에러가 남.
+임시로 아래 코드 추가함.
+```
+        if not lines:
+            fname = file.split("\\")[-1]
+            with open(fname) as f:
+                lines = f.readlines()
+```
+
+```
+def findsource(object):
+    """Return the entire source file and starting line number for an object.
+
+    The argument may be a module, class, method, function, traceback, frame,
+    or code object.  The source code is returned as a list of all the lines
+    in the file and the line number indexes a line in that list.  An IOError
+    is raised if the source code cannot be retrieved."""
+
+    file = getfile(object)
+    sourcefile = getsourcefile(object)
+    if not sourcefile and file[:1] + file[-1:] != '<>':
+        raise IOError('source code not available')
+    file = sourcefile if sourcefile else file
+
+    module = getmodule(object, file)
+    if module:
+        lines = linecache.getlines(file, module.__dict__)
+        if not lines:
+            fname = file.split("\\")[-1]
+            with open(fname) as f:
+                lines = f.readlines()
+    else:
+        lines = linecache.getlines(file)
+    if not lines:
+        raise IOError('could not get source code')
+
+```

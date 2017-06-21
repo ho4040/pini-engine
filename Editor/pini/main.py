@@ -9,7 +9,8 @@ Error_Logger = open("ERROR_LOG.txt","w+")
 if config.__RELEASE__ == False : 
 	sys.path.append("../Noriter")
 else:
-	sys.stderr   = Error_Logger
+	pass
+	# sys.stderr   = Error_Logger
 	#sys.stdout   = Error_Logger
 
 from PySide.QtGui import *

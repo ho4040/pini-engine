@@ -44,7 +44,7 @@ if sys.platform == "win32":
 	import py2exe
 	
 	platform_options = {
-		"windows": [{
+		"console": [{
 			"script": "main.py",
 			"icon_resources": [(1, "icon.ico")],
 			"dest_base": "PiniEngine",

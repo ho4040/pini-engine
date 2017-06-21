@@ -8,6 +8,7 @@ Editor/pini/tempSave
 proj.sublime-workspace
 *.apk
 *.sdf
+*.db
 *.opensdf
 NONE
 
@@ -23,3 +24,4 @@ Debug.win32/
 Release.win32/
 Engine/VisNovel/frameworks/runtime-src/proj.win32/Debug.win32/libcocos2d.pdb
 Engine/VisNovel/frameworks/runtime-src/proj.win32/Debug.win32/libluacocos2d.lib
+gen/

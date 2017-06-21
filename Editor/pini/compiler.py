@@ -20,7 +20,6 @@ import json
 from prof import Prof
 
 ##### Lexer ######
-#import lex
 import decimal
 import ATL
 
@@ -493,6 +492,7 @@ def filter(lexer, add_endmarker = True):
 
 class IndentLexer(object):
 	def __init__(self, debug=0, optimize=0, lextab='lextab', reflags=0):
+		print debug, optimize, lextab,reflags
 		self.lexer = lex.lex(debug=debug, optimize=optimize, lextab=lextab, reflags=reflags)
 		self.token_stream = None
 	def input(self, s, add_endmarker=True):

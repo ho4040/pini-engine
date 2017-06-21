@@ -1,6 +1,6 @@
 package org.cocos2dx.lua;
 
-import com.nooslab.pini_remote.R;
+import com.nooslab.pini_remote_landscape.R;
 
 import android.app.Notification;
 import android.app.NotificationManager;

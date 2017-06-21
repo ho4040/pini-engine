@@ -77,6 +77,7 @@ try:
 		shutil.rmtree(myjoin(os.curdir,"build"))
 
 		shutil.copyfile(myjoin(os.curdir,"atl.so"),myjoin(dist_root,"atl.so"))
+		shutil.copyfile(myjoin(os.curdir,"compiler.py"),myjoin(dist_root,"compiler.py"))
 		shutil.copyfile(myjoin(os.curdir,"libgcc_s_dw2-1.dll"),myjoin(dist_root,"libgcc_s_dw2-1.dll"))
 		shutil.copyfile(myjoin(os.curdir,"libstdc++-6.dll"),myjoin(dist_root,"libstdc++-6.dll"))
 
@@ -123,7 +124,10 @@ try:
 		#################################################################
 
 		apkdistpath = myjoin(dist_root,"resource","android")
-		shutil.rmtree(apkdistpath)
+		try:
+			shutil.rmtree(apkdistpath)
+		except Exception, e:
+			pass
 		os.mkdir(apkdistpath)
 
 		srcapk1 = myjoin(dist_root,"..","..","Engine","android","PiniRemote-portrait.apk")
@@ -186,10 +190,10 @@ try:
 
 		shutil.copyfile("nsis/Master/Updator.exe","../Updator.exe")
 
-		os.rename("nsis/Master/Updator.exe",u("nsis/Master/피니엔진.exe"))
+		os.rename("nsis/Master/Updator.exe",u("nsis/Master/piniengine.exe"))
 		shutil.copytree("../pini/imageformats","nsis/Master/imageformats")
 
-		os.system("..\\pini\\nsis\\makensis.exe nsis\\Master.nsi")
+		os.system("makensis.exe nsis\\Master.nsi")
 
 		try:
 			os.remove("../PiniInstaller.exe")
