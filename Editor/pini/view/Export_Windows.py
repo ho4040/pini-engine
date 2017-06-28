@@ -47,7 +47,7 @@ def PJOIN(*paths):
 	ret = os.path.join(*path).replace("/","\\")
 	return ret
 
-LUAJIT_PATH = "resource\\tools\\lua\\luajit.exe"
+LUAJIT_PATH = "resource\\tools\\lua\\luac.exe"
 
 class Thread_Command(QThread):
 	def __init__(self, command, parent = None ):
@@ -538,7 +538,7 @@ OutFile "installer.exe" ; 설치 파일 이름
 		luaf = path.replace("/","\\").encode(os_encoding.cp())
 		luacf= (dist+"c").replace("/","\\").encode(os_encoding.cp())
 
-		ARGU = [LUAJIT_PATH,"-b",luaf,luacf]
+		ARGU = [LUAJIT_PATH,"-o",luacf,luaf]
 		proc = subprocess.Popen(ARGU, stdout=subprocess.PIPE, stdin=subprocess.PIPE,shell=True )
 		try:
 			out, err = proc.communicate()
@@ -645,6 +645,7 @@ OutFile "installer.exe" ; 설치 파일 이름
 					targetFolders.append(PJOIN(DISTPATH,'sound'))
 
 				DISTPRZPATH = PJOIN(DISTPATH,"..","res.prz")
+				print [SEVENZIPPATH,'a','-tzip','-p'+base_password,'-r','-y',DISTPRZPATH]
 				rc = subprocess.call([SEVENZIPPATH,'a','-tzip','-p'+base_password,'-r','-y',DISTPRZPATH] + targetFolders)
 
 				if isImageExist:

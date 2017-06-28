@@ -98,21 +98,21 @@ try:
 		shutil.copytree(myjoin(os.pardir,os.pardir,"Engine","VisNovel","res"),myjoin(dist_root,"window","res"))
 
 		# launcher lua compile - dist_root+"\\window\\src"
-		launcher_lua = myjoin(dist_root,"window","src")
-		luaCompileWithCocos("launcher",launcher_lua)
+		# launcher_lua = myjoin(dist_root,"window","src")
+		# luaCompileWithCocos("launcher",launcher_lua)
 
 		### tool lua compile - dist_root+"\\lua"
-		tool_lua = myjoin(dist_root,"lua")
-		luaCompileWithLuac("tool",tool_lua)
+		# tool_lua = myjoin(dist_root,"lua")
+		# luaCompileWithLuac("tool",tool_lua)
 
 		### cocos lua remove 
-		for root, dirs, files in os.walk(myjoin(dist_root,"window","src"), topdown=False):
-			for name in files:
-				path = os.path.join(root, name).replace("\\","/")
-				p,ext= os.path.splitext(path) 
-				if ext == ".lua" : 
-					print "remove plain-lua ",path
-					os.remove(path)
+		# for root, dirs, files in os.walk(myjoin(dist_root,"window","src"), topdown=False):
+		# 	for name in files:
+		# 		path = os.path.join(root, name).replace("\\","/")
+		# 		p,ext= os.path.splitext(path) 
+		# 		if ext == ".lua" : 
+		# 			print "remove plain-lua ",path
+		# 			os.remove(path)
 
 		#################################################################
 		### android compile
