@@ -30,7 +30,7 @@
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 
-#include "UIEditBoxImpl.h"
+#include "ui/UIEditBox/UIEditBoxImpl.h"
 
 NS_CC_BEGIN
 
@@ -60,12 +60,27 @@ public:
     virtual void setInputFlag(EditBox::InputFlag inputFlag);
     virtual void setMaxLength(int maxLength);
     virtual int  getMaxLength();
+    virtual void setTextHorizontalAlignment(TextHAlignment alignment) { _alignment = alignment; }
     virtual void setReturnType(EditBox::KeyboardReturnType returnType);
     virtual bool isEditing();
-    
+
+    virtual const char* getFontName() override { return _fontName.c_str(); }
+    virtual int getFontSize() override { return _fontSize; }
+    virtual const Color4B& getFontColor() override { return _colText; }
+
+    virtual const char* getPlaceholderFontName() override { return _placeholderFontName.c_str(); }
+    virtual int getPlaceholderFontSize() override { return _placeholderFontSize; }
+    virtual const Color4B& getPlaceholderFontColor() override { return _colPlaceHolder; }
+
+    virtual EditBox::InputMode getInputMode() override { return _editBoxInputMode; }
+    virtual EditBox::InputFlag getInputFlag() override { return _editBoxInputFlag; }
+    virtual EditBox::KeyboardReturnType getReturnType() override { return _keyboardReturnType; }
+    virtual TextHAlignment getTextHorizontalAlignment() { return _alignment; }
+
     virtual void setText(const char* pText);
     virtual const char* getText(void);
     virtual void setPlaceHolder(const char* pText);
+    virtual const char* getPlaceHolder(void);
     virtual void setPosition(const Vec2& pos);
 	virtual void setVisible(bool visible);
     virtual void setContentSize(const Size& size);
@@ -90,10 +105,17 @@ private:
     EditBox::InputMode    _editBoxInputMode;
     EditBox::InputFlag    _editBoxInputFlag;
     EditBox::KeyboardReturnType  _keyboardReturnType;
+    TextHAlignment _alignment;
     
     std::string _text;
     std::string _placeHolder;
-    
+
+    std::string _fontName;
+    std::string _placeholderFontName;
+
+    int _fontSize;
+    int _placeholderFontSize;
+
     Color4B _colText;
     Color4B _colPlaceHolder;
 
@@ -105,8 +127,12 @@ private:
     HWND       _sysEdit;
     int        _maxTextLength;
 	*/
+    std::string _editingText;
+    std::string _originalText;
     bool _isEditing;
-    static void onWin32InputBoxTextChange(const char *pText, EditBoxImplWin *thiz);
+
+    void onWin32InputBoxTextChange(const char *pText);
+    void onWin32InputBoxClose(INT_PTR buttonId);
 };
 
 

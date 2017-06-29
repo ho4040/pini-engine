@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2015 Chukong Technologies
+Copyright (c) 2013-2017 Chukong Technologies
  
  http://www.cocos2d-x.org
  
@@ -150,7 +150,7 @@ public: virtual const varType& get##funName(void) const;
  */
 #define CC_PROPERTY(varType, varName, funName)\
 protected: varType varName;\
-public: virtual varType get##funName(void);\
+public: virtual varType get##funName(void) const;\
 public: virtual void set##funName(varType var);
 
 #define CC_PROPERTY_PASS_BY_REF(varType, varName, funName)\
@@ -220,15 +220,15 @@ public: virtual void set##funName(varType var)   \
 #define CC_BREAK_IF(cond)           if(cond) break
 
 #define __CCLOGWITHFUNCTION(s, ...) \
-    log("%s : %s",__FUNCTION__, StringUtils::format(s, ##__VA_ARGS__).c_str())
+    cocos2d::log("%s : %s",__FUNCTION__, cocos2d::StringUtils::format(s, ##__VA_ARGS__).c_str())
 
 /// @name Cocos2d debug
 /// @{
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
-#define CCLOG(format, ...)      cocos2d::log(format, ##__VA_ARGS__)
-#define CCLOGERROR(format,...)  cocos2d::log(format, ##__VA_ARGS__)
-#define CCLOGINFO(format,...)   do {} while (0)
-#define CCLOGWARN(...) __CCLOGWITHFUNCTION(__VA_ARGS__)
+#define CCLOG(...)       do {} while (0)
+#define CCLOGINFO(...)   do {} while (0)
+#define CCLOGERROR(...)  do {} while (0)
+#define CCLOGWARN(...)   do {} while (0)
 
 #elif COCOS2D_DEBUG == 1
 #define CCLOG(format, ...)      cocos2d::log(format, ##__VA_ARGS__)

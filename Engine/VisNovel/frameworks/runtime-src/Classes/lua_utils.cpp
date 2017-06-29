@@ -1,4 +1,3 @@
-
 #include "lua_utils.h"
 #include <stdlib.h>
 #include <string.h>
@@ -7,10 +6,11 @@ extern "C" {
 #include <lua.h>
 #include <lauxlib.h>
 }
-#include "CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
 
-#include "tolua_fix.h"
-#include "AudioEngine.h"
+#include "audio/include/AudioEngine.h"
+
 #include "base/base64.h"
 
 #include "ATL.h"
@@ -905,7 +905,7 @@ int Load_SaveVar(lua_State* L){
 int SetWindowTitle(lua_State* L){
 #if defined(_MSC_VER) || defined(__MINGW32__)
 	const char *filename = luaL_checklstring(L, 1, NULL);
-	SimulatorWin::getInstance()->setTitle((char*)filename);
+	//SimulatorWin::getInstance()->setTitle((char*)filename);
 #endif
 	return 0;
 }

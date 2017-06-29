@@ -22,7 +22,7 @@
 #include "glfw3.h"
 #include "glfw3native.h"
 
-#include "CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
 #include "AppEvent.h"
 #include "AppLang.h"
 #include "runtime/ConfigParser.h"
@@ -32,12 +32,7 @@
 #include "platform/win32/PlayerMenuServiceWin.h"
 
 // define 1 to open console ui and setup windows system menu, 0 to disable
-#include "ide-support/CodeIDESupport.h"
-#if (CC_CODE_IDE_DEBUG_SUPPORT > 0)
-#define SIMULATOR_WITH_CONSOLE_AND_MENU 1
-#else
 #define SIMULATOR_WITH_CONSOLE_AND_MENU 0
-#endif
 
 USING_NS_CC;
 
@@ -100,8 +95,7 @@ std::string getCurAppPath(void)
 
 static void initGLContextAttrs()
 {
-    //set OpenGL context attributions,now can only set six attributions:
-    //red,green,blue,alpha,depth,stencil
+    // set OpenGL context attributes: red,green,blue,alpha,depth,stencil
     GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
 
     GLView::setGLContextAttrs(glContextAttrs);
@@ -119,9 +113,9 @@ SimulatorWin *SimulatorWin::getInstance()
 }
 
 SimulatorWin::SimulatorWin()
-    : _app(nullptr)
-    , _hwnd(NULL)
+    : _hwnd(NULL)
     , _hwndConsole(NULL)
+    , _app(nullptr)
     , _writeDebugLogFile(nullptr)
 {
 }
@@ -174,7 +168,7 @@ void SimulatorWin::openNewPlayerWithProjectConfig(const ProjectConfig &config)
     STARTUPINFO si = {0};
     si.cb = sizeof(STARTUPINFO);
 
-#define MAX_COMMAND 1024 // lenth of commandLine is always beyond MAX_PATH
+#define MAX_COMMAND 1024 // length of commandLine is always beyond MAX_PATH
 
     WCHAR command[MAX_COMMAND];
     memset(command, 0, sizeof(command));
@@ -217,7 +211,7 @@ int SimulatorWin::getPositionY()
     return rect.top;
 }
 
-int SimulatorWin::run(bool fullscreen)
+int SimulatorWin::run()
 {
     INITCOMMONCONTROLSEX InitCtrls;
     InitCtrls.dwSize = sizeof(InitCtrls);
@@ -237,28 +231,38 @@ int SimulatorWin::run(bool fullscreen)
     }
     _project.parseCommandLine(args);
 
-    //if (_project.getProjectDir().empty())
-    //{
-    //    if (args.size() == 2)
-    //    {
-    //        // for Code IDE before RC2
-    //        _project.setProjectDir(args.at(1));
-    //        _project.setDebuggerType(kCCRuntimeDebuggerCodeIDE);
-    //    }
-    //}
+    if (_project.getProjectDir().empty())
+    {
+        if (args.size() == 2)
+        {
+            // for Code IDE before RC2
+            _project.setProjectDir(args.at(1));
+            _project.setDebuggerType(kCCRuntimeDebuggerCodeIDE);
+        }
+    }
 
     // create the application instance
-    _app = new AppDelegate(fullscreen);
+    _app = new AppDelegate();
     RuntimeEngine::getInstance()->setProjectConfig(_project);
 
 #if (SIMULATOR_WITH_CONSOLE_AND_MENU > 0)
     // create console window
     if (_project.isShowConsole())
     {
-        HMENU hmenu = GetSystemMenu(_hwndConsole, FALSE);
-        if (hmenu != NULL)
+        AllocConsole();
+        _hwndConsole = GetConsoleWindow();
+        if (_hwndConsole != NULL)
         {
-            DeleteMenu(hmenu, SC_CLOSE, MF_BYCOMMAND);
+            ShowWindow(_hwndConsole, SW_SHOW);
+            BringWindowToTop(_hwndConsole);
+            freopen("CONOUT$", "wt", stdout);
+            freopen("CONOUT$", "wt", stderr);
+
+            HMENU hmenu = GetSystemMenu(_hwndConsole, FALSE);
+            if (hmenu != NULL)
+            {
+                DeleteMenu(hmenu, SC_CLOSE, MF_BYCOMMAND);
+            }
         }
     }
 #endif
@@ -325,21 +329,16 @@ int SimulatorWin::run(bool fullscreen)
     ConfigParser::getInstance()->setInitViewSize(frameSize);
     const bool isResize = _project.isResizeWindow();
     std::stringstream title;
-    title << "Pini Remote - " << ConfigParser::getInstance()->getInitViewName();
+    title << "Cocos Simulator - " << ConfigParser::getInstance()->getInitViewName();
     initGLContextAttrs();
-
-	GLViewImpl* glview = nullptr;
-	if (fullscreen){
-		glview = GLViewImpl::createWithFullScreen(title.str());
-	}
-	else{
-		glview = GLViewImpl::createWithRect(title.str(), frameRect, frameScale);
-	}
-
+    auto glview = GLViewImpl::createWithRect(title.str(), frameRect, frameScale);
     _hwnd = glview->getWin32Window();
     player::PlayerWin::createWithHwnd(_hwnd);
     DragAcceptFiles(_hwnd, TRUE);
-    
+    //SendMessage(_hwnd, WM_SETICON, ICON_BIG, (LPARAM)icon);
+    //SendMessage(_hwnd, WM_SETICON, ICON_SMALL, (LPARAM)icon);
+    //FreeResource(icon);
+
     auto director = Director::getInstance();
     director->setOpenGLView(glview);
 
@@ -350,8 +349,7 @@ int SimulatorWin::run(bool fullscreen)
     {
         setZoom(_project.getFrameScale());
     }
-    
-	Vec2 pos = _project.getWindowOffset();
+    Vec2 pos = _project.getWindowOffset();
     if (pos.x != 0 && pos.y != 0)
     {
         RECT rect;
@@ -571,19 +569,6 @@ void SimulatorWin::setupUI()
     dispatcher->addEventListenerWithFixedPriority(listener, 1);
 }
 
-void SimulatorWin::setTitle(char* str){
-	// wchar_t* wtext = (wchar_t*);
-	std::u16string utf16Title;
-	cocos2d::StringUtils::UTF8ToUTF16(str, utf16Title);
-	::SetWindowTextW(_hwnd, (LPCWSTR)utf16Title.c_str());
-/*
-	char *charBuff = str;
-	TCHAR szUniCode[256] = { 0, };
-	MultiByteToWideChar(CP_UTF8, MB_PRECOMPOSED, charBuff, strlen(charBuff), szUniCode, 256);
-
-	SetWindowText(_hwnd, szUniCode);*/
-}
-
 void SimulatorWin::setZoom(float frameScale)
 {
     _project.setFrameScale(frameScale);
@@ -677,7 +662,7 @@ std::string SimulatorWin::getUserDocumentPath()
     char* tempstring = new char[length + 1];
     wcstombs(tempstring, filePath, length + 1);
     string userDocumentPath(tempstring);
-    free(tempstring);
+    delete [] tempstring;
 
     userDocumentPath = convertPathFormatToUnixStyle(userDocumentPath);
     userDocumentPath.append("/");
@@ -836,4 +821,3 @@ LRESULT CALLBACK SimulatorWin::windowProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
     }
     return g_oldWindowProc(hWnd, uMsg, wParam, lParam);
 }
-

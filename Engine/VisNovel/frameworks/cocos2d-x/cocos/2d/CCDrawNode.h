@@ -1,6 +1,6 @@
 /* Copyright (c) 2012 Scott Lembcke and Howling Moon Software
  * Copyright (c) 2012 cocos2d-x.org
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2017 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,6 +38,8 @@
 
 NS_CC_BEGIN
 
+static const int DEFAULT_LINE_WIDTH = 2;
+
 class PointArray;
 /**
  * @addtogroup _2d
@@ -56,7 +58,7 @@ public:
      *
      * @return Return an autorelease object.
      */
-    static DrawNode* create();
+    static DrawNode* create(GLfloat defaultLineWidth = DEFAULT_LINE_WIDTH);
     
     /** Draw a point.
      *
@@ -298,23 +300,26 @@ public:
     /**
      * @js NA
      */
-	void onDraw(const Mat4 &transform, uint32_t flags);
+    virtual void onDraw(const Mat4 &transform, uint32_t flags);
     /**
      * @js NA
      */
-	void onDrawGLLine(const Mat4 &transform, uint32_t flags);
+    virtual void onDrawGLLine(const Mat4 &transform, uint32_t flags);
     /**
      * @js NA
      */
-    void onDrawGLPoint(const Mat4 &transform, uint32_t flags);
+    virtual void onDrawGLPoint(const Mat4 &transform, uint32_t flags);
     
     // Overrides
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     
-    void setLineWidth(int lineWidth);
-    
+    void setLineWidth(GLfloat lineWidth);
+
+    // Get CocosStudio guide lines width.
+    GLfloat getLineWidth();
+
 CC_CONSTRUCTOR_ACCESS:
-    DrawNode();
+    DrawNode(GLfloat lineWidth = DEFAULT_LINE_WIDTH);
     virtual ~DrawNode();
     virtual bool init() override;
 
@@ -353,8 +358,9 @@ protected:
     bool        _dirtyGLPoint;
     bool        _dirtyGLLine;
     
-    int         _lineWidth;
+    GLfloat         _lineWidth;
 
+    GLfloat  _defaultLineWidth;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(DrawNode);
 };

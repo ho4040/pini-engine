@@ -29,66 +29,23 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
+import android.media.AudioManager;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager.OnActivityResultListener;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ViewGroup;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
-
-import com.chukong.cocosplay.client.CocosPlayClient;
 
 import org.cocos2dx.lib.Cocos2dxHelper.Cocos2dxHelperListener;
 
 import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.egl.EGLDisplay;
-
-class ResizeLayout extends FrameLayout{
-    private  boolean mEnableForceDoLayout = false;
-
-    public ResizeLayout(Context context){
-        super(context);
-    }
-
-    public ResizeLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-    public void setEnableForceDoLayout(boolean flag){
-        mEnableForceDoLayout = flag;
-    }
-
-    @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        super.onLayout(changed, l, t, r, b);
-        if(mEnableForceDoLayout){
-            /*This is a hot-fix for some android devices which don't do layout when the main window
-            * is paned.  We refersh the layout in 24 frames per seconds.
-            * When the editBox is lose focus or when user begin to type, the do layout is disabled.
-            */
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    //Do something after 100ms
-                    requestLayout();
-                    invalidate();
-                }
-            }, 1000 / 24);
-
-        }
-
-    }
-
-}
-
 
 public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelperListener {
     // ===========================================================
@@ -298,7 +255,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        CocosPlayClient.init(this, false);
+
+        this.hideVirtualButton();
 
         onLoadNativeLibraries();
 
@@ -324,6 +282,10 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 
         Window window = this.getWindow();
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
+
+        Cocos2dxEngineDataManager.init(this, mGLSurfaceView);
     }
 
     //native method,call GLViewImpl::getGLContextAttrs() to get the OpenGL ES context attributions
@@ -341,7 +303,10 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     protected void onResume() {
     	Log.d(TAG, "onResume()");
         super.onResume();
+        this.hideVirtualButton();
        	resumeIfHasFocus();
+
+        Cocos2dxEngineDataManager.resume();
     }
     
     @Override
@@ -355,6 +320,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     
     private void resumeIfHasFocus() {
         if(hasFocus) {
+            this.hideVirtualButton();
         	Cocos2dxHelper.onResume();
         	mGLSurfaceView.onResume();
         }
@@ -366,11 +332,14 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         super.onPause();
         Cocos2dxHelper.onPause();
         mGLSurfaceView.onPause();
+        Cocos2dxEngineDataManager.pause();
     }
     
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        Cocos2dxEngineDataManager.destroy();
     }
 
     @Override
@@ -449,6 +418,38 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         glSurfaceView.setEGLConfigChooser(chooser);
 
         return glSurfaceView;
+    }
+
+    protected void hideVirtualButton() {
+
+        if (Build.VERSION.SDK_INT >= 19) {
+            // use reflection to remove dependence of API level
+
+            Class viewClass = View.class;
+
+            try {
+                final int SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION = Cocos2dxReflectionHelper.<Integer>getConstantValue(viewClass, "SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION");
+                final int SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN = Cocos2dxReflectionHelper.<Integer>getConstantValue(viewClass, "SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN");
+                final int SYSTEM_UI_FLAG_HIDE_NAVIGATION = Cocos2dxReflectionHelper.<Integer>getConstantValue(viewClass, "SYSTEM_UI_FLAG_HIDE_NAVIGATION");
+                final int SYSTEM_UI_FLAG_FULLSCREEN = Cocos2dxReflectionHelper.<Integer>getConstantValue(viewClass, "SYSTEM_UI_FLAG_FULLSCREEN");
+                final int SYSTEM_UI_FLAG_IMMERSIVE_STICKY = Cocos2dxReflectionHelper.<Integer>getConstantValue(viewClass, "SYSTEM_UI_FLAG_IMMERSIVE_STICKY");
+                final int SYSTEM_UI_FLAG_LAYOUT_STABLE = Cocos2dxReflectionHelper.<Integer>getConstantValue(viewClass, "SYSTEM_UI_FLAG_LAYOUT_STABLE");
+
+                // getWindow().getDecorView().setSystemUiVisibility();
+                final Object[] parameters = new Object[]{SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                        | SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                        | SYSTEM_UI_FLAG_IMMERSIVE_STICKY};
+                Cocos2dxReflectionHelper.<Void>invokeInstanceMethod(getWindow().getDecorView(),
+                        "setSystemUiVisibility",
+                        new Class[]{Integer.TYPE},
+                        parameters);
+            } catch (NullPointerException e) {
+                Log.e(TAG, "hideVirtualButton", e);
+            }
+        }
     }
 
    private final static boolean isAndroidEmulator() {

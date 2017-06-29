@@ -1,6 +1,5 @@
 #include "AppDelegate.h"
-#include "CCLuaEngine.h"
-#include "SimpleAudioEngine.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
 #include "cocos2d.h"
 #include "lua_module_register.h"
 
@@ -20,11 +19,9 @@
 
 #include "VideoPlayer.h"
 #include "TextInput.h"
-#include "AudioEngine.h"
+#include "audio/include/AudioEngine.h"
 
 #include "AsyncLoaderManager.h"
-
-using namespace CocosDenshion;
 
 USING_NS_CC;
 using namespace std;
@@ -173,7 +170,6 @@ void AppDelegate::applicationDidEnterBackground()
 {
     Director::getInstance()->stopAnimation();
 
-	SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
 	experimental::AudioEngine::pauseAll();
 
 	list<AppDelegateEvent*>::iterator b = _eventNode.begin();
@@ -188,7 +184,6 @@ void AppDelegate::applicationWillEnterForeground()
 {
     Director::getInstance()->startAnimation();
 
-	SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 	experimental::AudioEngine::resumeAll();
 
 	list<AppDelegateEvent*>::iterator b = _eventNode.begin();

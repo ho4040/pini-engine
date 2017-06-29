@@ -2,13 +2,15 @@
 #define __VIDEO_PLAYER_H__
 
 #include "cocos2d.h"
-#include "CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
 
 #include "AL/al.h"
 #include "AL/alc.h"
 #include "AL/alext.h"
 
 #include "AppDelegateEvent.h"
+
+#include <Windows.h>
 
 #include <mutex>
 #include <thread>

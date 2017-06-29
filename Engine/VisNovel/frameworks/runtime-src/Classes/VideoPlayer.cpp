@@ -732,7 +732,7 @@ VideoPlayer* VideoPlayer::create(string path){
 
 #include <lua.h>
 #include <lauxlib.h>
-#include <tolua_fix.h>
+#include "scripting/lua-bindings/manual/tolua_fix.h"
 static int lua_videoplayer_create(lua_State *L) {
 	const char *message = luaL_checklstring(L, 2, NULL);
 	VideoPlayer* tolua_ret = VideoPlayer::create(message);

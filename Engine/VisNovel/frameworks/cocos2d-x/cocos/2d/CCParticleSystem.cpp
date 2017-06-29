@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -51,8 +51,9 @@ THE SOFTWARE.
 #include "base/base64.h"
 #include "base/ZipUtils.h"
 #include "base/CCDirector.h"
+#include "base/CCProfiling.h"
+#include "base/ccUTF8.h"
 #include "renderer/CCTextureCache.h"
-#include "deprecated/CCString.h"
 #include "platform/CCFileUtils.h"
 
 using namespace std;
@@ -77,7 +78,7 @@ NS_CC_BEGIN
 //
 
 
-inline void nomalize_point(float x, float y, particle_point* out)
+inline void normalize_point(float x, float y, particle_point* out)
 {
     float n = x * x + y * y;
     // Already normalized.
@@ -184,6 +185,9 @@ void ParticleData::release()
     CC_SAFE_FREE(modeB.radius);
 }
 
+Vector<ParticleSystem*> ParticleSystem::__allInstances;
+float ParticleSystem::__totalParticleCountFactor = 1.0f;
+
 ParticleSystem::ParticleSystem()
 : _isBlendAdditive(false)
 , _isAutoRemoveOnFinish(false)
@@ -218,6 +222,7 @@ ParticleSystem::ParticleSystem()
 , _opacityModifyRGB(false)
 , _yCoordFlipped(1)
 , _positionType(PositionType::FREE)
+, _paused(false)
 {
     modeA.gravity.setZero();
     modeA.speed = 0;
@@ -260,6 +265,17 @@ ParticleSystem* ParticleSystem::createWithTotalParticles(int numberOfParticles)
     return ret;
 }
 
+// static
+Vector<ParticleSystem*>& ParticleSystem::getAllParticleSystems()
+{
+    return __allInstances;
+}
+
+void ParticleSystem::setTotalParticleCountFactor(float factor)
+{
+    __totalParticleCountFactor = factor;
+}
+
 bool ParticleSystem::init()
 {
     return initWithTotalParticles(150);
@@ -278,7 +294,7 @@ bool ParticleSystem::initWithFile(const std::string& plistFile)
     if (listFilePath.find('/') != string::npos)
     {
         listFilePath = listFilePath.substr(0, listFilePath.rfind('/') + 1);
-        ret = this->initWithDictionary(dict, listFilePath.c_str());
+        ret = this->initWithDictionary(dict, listFilePath);
     }
     else
     {
@@ -587,6 +603,8 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::addParticles(int count)
 {
+    if (_paused)
+        return;
     uint32_t RANDSEED = rand();
 
     int start = _particleCount;
@@ -789,6 +807,8 @@ void ParticleSystem::onEnter()
     
     // update after action in run!
     this->scheduleUpdateWithPriority(1);
+
+    __allInstances.pushBack(this);
 }
 
 void ParticleSystem::onExit()
@@ -803,6 +823,12 @@ void ParticleSystem::onExit()
     
     this->unscheduleUpdate();
     Node::onExit();
+
+    auto iter = std::find(std::begin(__allInstances), std::end(__allInstances), this);
+    if (iter != std::end(__allInstances))
+    {
+        __allInstances.erase(iter);
+    }
 }
 
 void ParticleSystem::stopSystem()
@@ -835,15 +861,17 @@ void ParticleSystem::update(float dt)
     if (_isActive && _emissionRate)
     {
         float rate = 1.0f / _emissionRate;
+        int totalParticles = static_cast<int>(_totalParticles * __totalParticleCountFactor);
+        
         //issue #1201, prevent bursts of particles, due to too high emitCounter
-        if (_particleCount < _totalParticles)
+        if (_particleCount < totalParticles)
         {
             _emitCounter += dt;
             if (_emitCounter < 0.f)
                 _emitCounter = 0.f;
         }
         
-        int emitCount = MIN(_totalParticles - _particleCount, _emitCounter / rate);
+        int emitCount = MIN(totalParticles - _particleCount, _emitCounter / rate);
         addParticles(emitCount);
         _emitCounter -= rate * emitCount;
         
@@ -900,7 +928,7 @@ void ParticleSystem::update(float dt)
                 // radial acceleration
                 if (_particleData.posx[i] || _particleData.posy[i])
                 {
-                    nomalize_point(_particleData.posx[i], _particleData.posy[i], &radial);
+                    normalize_point(_particleData.posx[i], _particleData.posy[i], &radial);
                 }
                 tangential = radial;
                 radial.x *= _particleData.modeA.radialAccel[i];
@@ -932,6 +960,12 @@ void ParticleSystem::update(float dt)
         }
         else
         {
+            //Why use so many for-loop separately instead of putting them together?
+            //When the processor needs to read from or write to a location in memory,
+            //it first checks whether a copy of that data is in the cache.
+            //And every property's memory of the particle system is continuous,
+            //for the purpose of improving cache hit rate, we should process only one property in one for-loop AFAP.
+            //It was proved to be effective especially for low-end machine. 
             for (int i = 0; i < _particleCount; ++i)
             {
                 _particleData.modeB.angle[i] += _particleData.modeB.degreesPerSecond[i] * dt;
@@ -1331,6 +1365,32 @@ void ParticleSystem::setScaleY(float newScaleY)
     _transformSystemDirty = true;
     Node::setScaleY(newScaleY);
 }
+
+void ParticleSystem::start()
+{
+    resetSystem();
+}
+
+void ParticleSystem::stop()
+{
+    stopSystem();
+}
+
+bool ParticleSystem::isPaused() const
+{
+    return _paused;
+}
+
+void ParticleSystem::pauseEmissions()
+{
+    _paused = true;
+}
+
+void ParticleSystem::resumeEmissions()
+{
+    _paused = false;
+}
+
 
 
 NS_CC_END

@@ -10,6 +10,7 @@ proj.sublime-workspace
 *.sdf
 *.db
 *.opensdf
+.vs/
 NONE
 
 Engine/VisNovel/frameworks/runtime-src/proj.android/bin/

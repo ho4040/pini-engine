@@ -124,7 +124,7 @@ bool TextInput::onDraw(TextFieldTTF * sender){
 ///////////////////////////////////////////////////////////////////////////
 #include <lua.h>
 #include <lauxlib.h>
-#include <tolua_fix.h>
+#include "scripting/lua-bindings/manual/tolua_fix.h"
 
 static int lua_TextInput_create(lua_State *L) {
 	const char *placeholder = luaL_checklstring(L, 2, NULL);

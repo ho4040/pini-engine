@@ -2,7 +2,7 @@
 #define _PINI_TEXTINPUT_
 
 #include "cocos2d.h"
-#include "CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
 using namespace cocos2d;
 using namespace std;
 

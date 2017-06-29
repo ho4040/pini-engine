@@ -22,58 +22,65 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CSLoader.h"
+#include "editor-support/cocostudio/ActionTimeline/CSLoader.h"
 
 #include "base/ObjectFactory.h"
+#include "base/CCDirector.h"
+#include "base/ccUTF8.h"
+#include "ui/CocosGUI.h"
+#include "2d/CCSpriteFrameCache.h"
+#include "2d/CCParticleSystemQuad.h"
+#include "2d/CCTMXTiledMap.h"
+#include "platform/CCFileUtils.h"
 
-#include "../../cocos/ui/CocosGUI.h"
-#include "CCActionTimelineCache.h"
-#include "CCActionTimeline.h"
-#include "CCActionTimelineNode.h"
-#include "../CCSGUIReader.h"
-#include "cocostudio/CocoStudio.h"
-#include "cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/ActionTimeline/CCActionTimelineCache.h"
+#include "editor-support/cocostudio/ActionTimeline/CCActionTimeline.h"
+#include "editor-support/cocostudio/ActionTimeline/CCActionTimelineNode.h"
+#include "editor-support/cocostudio/CCSGUIReader.h"
+#include "editor-support/cocostudio/CocoStudio.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
 
-#include "cocostudio/WidgetReader/NodeReaderProtocol.h"
-#include "cocostudio/WidgetReader/NodeReaderDefine.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReaderProtocol.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReaderDefine.h"
 
-#include "cocostudio/WidgetReader/NodeReader/NodeReader.h"
-#include "cocostudio/WidgetReader/SingleNodeReader/SingleNodeReader.h"
-#include "cocostudio/WidgetReader/SpriteReader/SpriteReader.h"
-#include "cocostudio/WidgetReader/ParticleReader/ParticleReader.h"
-#include "cocostudio/WidgetReader/GameMapReader/GameMapReader.h"
-#include "cocostudio/WidgetReader/ProjectNodeReader/ProjectNodeReader.h"
-#include "cocostudio/WidgetReader/ComAudioReader/ComAudioReader.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReader/NodeReader.h"
+#include "editor-support/cocostudio/WidgetReader/SingleNodeReader/SingleNodeReader.h"
+#include "editor-support/cocostudio/WidgetReader/SpriteReader/SpriteReader.h"
+#include "editor-support/cocostudio/WidgetReader/ParticleReader/ParticleReader.h"
+#include "editor-support/cocostudio/WidgetReader/GameMapReader/GameMapReader.h"
+#include "editor-support/cocostudio/WidgetReader/ProjectNodeReader/ProjectNodeReader.h"
+#include "editor-support/cocostudio/WidgetReader/ComAudioReader/ComAudioReader.h"
 
-#include "cocostudio/WidgetReader/ButtonReader/ButtonReader.h"
-#include "cocostudio/WidgetReader/CheckBoxReader/CheckBoxReader.h"
-#include "cocostudio/WidgetReader/ImageViewReader/ImageViewReader.h"
-#include "cocostudio/WidgetReader/TextBMFontReader/TextBMFontReader.h"
-#include "cocostudio/WidgetReader/TextReader/TextReader.h"
-#include "cocostudio/WidgetReader/TextFieldReader/TextFieldReader.h"
-#include "cocostudio/WidgetReader/TextAtlasReader/TextAtlasReader.h"
-#include "cocostudio/WidgetReader/LoadingBarReader/LoadingBarReader.h"
-#include "cocostudio/WidgetReader/SliderReader/SliderReader.h"
-#include "cocostudio/WidgetReader/LayoutReader/LayoutReader.h"
-#include "cocostudio/WidgetReader/ScrollViewReader/ScrollViewReader.h"
-#include "cocostudio/WidgetReader/PageViewReader/PageViewReader.h"
-#include "cocostudio/WidgetReader/ListViewReader/ListViewReader.h"
-#include "cocostudio/WidgetReader/ArmatureNodeReader/ArmatureNodeReader.h"
-#include "cocostudio/WidgetReader/Node3DReader/Node3DReader.h"
-#include "cocostudio/WidgetReader/Sprite3DReader/Sprite3DReader.h"
-#include "cocostudio/WidgetReader/UserCameraReader/UserCameraReader.h"
-#include "cocostudio/WidgetReader/Particle3DReader/Particle3DReader.h"
-#include "cocostudio/WidgetReader/GameNode3DReader/GameNode3DReader.h"
-#include "cocostudio/WidgetReader/Light3DReader/Light3DReader.h"
+#include "editor-support/cocostudio/WidgetReader/ButtonReader/ButtonReader.h"
+#include "editor-support/cocostudio/WidgetReader/CheckBoxReader/CheckBoxReader.h"
+#include "editor-support/cocostudio/WidgetReader/ImageViewReader/ImageViewReader.h"
+#include "editor-support/cocostudio/WidgetReader/TextBMFontReader/TextBMFontReader.h"
+#include "editor-support/cocostudio/WidgetReader/TextReader/TextReader.h"
+#include "editor-support/cocostudio/WidgetReader/TextFieldReader/TextFieldReader.h"
+#include "editor-support/cocostudio/WidgetReader/TextAtlasReader/TextAtlasReader.h"
+#include "editor-support/cocostudio/WidgetReader/LoadingBarReader/LoadingBarReader.h"
+#include "editor-support/cocostudio/WidgetReader/SliderReader/SliderReader.h"
+#include "editor-support/cocostudio/WidgetReader/LayoutReader/LayoutReader.h"
+#include "editor-support/cocostudio/WidgetReader/ScrollViewReader/ScrollViewReader.h"
+#include "editor-support/cocostudio/WidgetReader/PageViewReader/PageViewReader.h"
+#include "editor-support/cocostudio/WidgetReader/ListViewReader/ListViewReader.h"
+#include "editor-support/cocostudio/WidgetReader/ArmatureNodeReader/ArmatureNodeReader.h"
+#include "editor-support/cocostudio/WidgetReader/Node3DReader/Node3DReader.h"
+#include "editor-support/cocostudio/WidgetReader/Sprite3DReader/Sprite3DReader.h"
+#include "editor-support/cocostudio/WidgetReader/UserCameraReader/UserCameraReader.h"
+#include "editor-support/cocostudio/WidgetReader/Particle3DReader/Particle3DReader.h"
+#include "editor-support/cocostudio/WidgetReader/GameNode3DReader/GameNode3DReader.h"
+#include "editor-support/cocostudio/WidgetReader/Light3DReader/Light3DReader.h"
+#include "editor-support/cocostudio/WidgetReader/TabControlReader/TabControlReader.h"
 
-#include "cocostudio/WidgetReader/SkeletonReader/BoneNodeReader.h"
-#include "cocostudio/WidgetReader/SkeletonReader/SkeletonNodeReader.h"
+#include "editor-support/cocostudio/WidgetReader/SkeletonReader/BoneNodeReader.h"
+#include "editor-support/cocostudio/WidgetReader/SkeletonReader/SkeletonNodeReader.h"
 #include "flatbuffers/flatbuffers.h"
 #include "flatbuffers/util.h"
 
-#include "cocostudio/FlatBuffersSerialize.h"
+#include "editor-support/cocostudio/FlatBuffersSerialize.h"
 
-#include "cocostudio/WidgetCallBackHandlerProtocol.h"
+#include "editor-support/cocostudio/WidgetCallBackHandlerProtocol.h"
 
 #include <fstream>
 
@@ -171,7 +178,7 @@ CSLoader* CSLoader::getInstance()
 {
     if (! _sharedCSLoader)
     {
-        _sharedCSLoader = new CSLoader();
+        _sharedCSLoader = new (std::nothrow) CSLoader();
         _sharedCSLoader->init();
     }
     
@@ -218,6 +225,7 @@ CSLoader::CSLoader()
     CREATE_CLASS_NODE_READER_INFO(Particle3DReader);
     CREATE_CLASS_NODE_READER_INFO(GameNode3DReader);
     CREATE_CLASS_NODE_READER_INFO(Light3DReader);
+    CREATE_CLASS_NODE_READER_INFO(TabControlReader);
 
     CREATE_CLASS_NODE_READER_INFO(BoneNodeReader);
     CREATE_CLASS_NODE_READER_INFO(SkeletonNodeReader);
@@ -264,7 +272,6 @@ Node* CSLoader::createNode(const std::string& filename)
     std::string path = filename;
     size_t pos = path.find_last_of('.');
     std::string suffix = path.substr(pos + 1, path.length());
-    CCLOG("suffix = %s", suffix.c_str());
     
     CSLoader* load = CSLoader::getInstance();
 
@@ -285,7 +292,6 @@ Node* CSLoader::createNode(const std::string &filename, const ccNodeLoadCallback
     std::string path = filename;
     size_t pos = path.find_last_of('.');
     std::string suffix = path.substr(pos + 1, path.length());
-    CCLOG("suffix = %s", suffix.c_str());
     
     CSLoader* load = CSLoader::getInstance();
 
@@ -323,11 +329,9 @@ Node* CSLoader::createNodeWithVisibleSize(const std::string &filename, const ccN
 
 std::string CSLoader::getExtentionName(const std::string& name)
 {
-    std::string result = "";
-
     std::string path = name;
     size_t pos = path.find_last_of('.');
-    result = path.substr(pos + 1, path.length());
+    std::string result = path.substr(pos + 1, path.length());
 
     return result;
 }
@@ -335,7 +339,6 @@ std::string CSLoader::getExtentionName(const std::string& name)
 ActionTimeline* CSLoader::createTimeline(const std::string &filename)
 {
     std::string suffix = getExtentionName(filename);
-    CCLOG("suffix = %s", suffix.c_str());
     
     ActionTimelineCache* cache = ActionTimelineCache::getInstance();
     
@@ -351,21 +354,20 @@ ActionTimeline* CSLoader::createTimeline(const std::string &filename)
     return nullptr;
 }
 
-ActionTimeline* CSLoader::createTimeline(const Data data, const std::string& filename)
+ActionTimeline* CSLoader::createTimeline(const Data& data, const std::string& filename)
 {
     std::string suffix = getExtentionName(filename);
-    CCLOG("suffix = %s", suffix.c_str());
 
     ActionTimelineCache* cache = ActionTimelineCache::getInstance();
 
     if (suffix == "csb")
     {
-        return cache->loadAnimationWithDataBuffer(data, filename);
+        return cache->createActionWithDataBuffer(data, filename);
     }
     else if (suffix == "json" || suffix == "ExportJson")
     {
         std::string content((char *)data.getBytes(), data.getSize());
-        return cache->loadAnimationActionWithContent(filename, content);
+        return cache->createActionFromContent(filename, content);
     }
 
     return nullptr;
@@ -746,7 +748,7 @@ Node* CSLoader::loadWidget(const rapidjson::Value& json)
     
     
     
-    WidgetPropertiesReader0300* widgetPropertiesReader = new WidgetPropertiesReader0300();
+    WidgetPropertiesReader0300* widgetPropertiesReader = new (std::nothrow) WidgetPropertiesReader0300();
     Widget* widget = nullptr;
     
     if (isWidget(classname))
@@ -857,12 +859,12 @@ Component* CSLoader::loadComAudio(const rapidjson::Value &json)
     return audio;
 }
 
-cocos2d::Node* CSLoader::createNode(const Data data)
+cocos2d::Node* CSLoader::createNode(const Data& data)
 {
     return createNode(data, nullptr);
 }
 
-Node * CSLoader::createNode(const Data data, const ccNodeLoadCallback &callback)
+Node * CSLoader::createNode(const Data& data, const ccNodeLoadCallback &callback)
 {
     CSLoader * loader = CSLoader::getInstance();
     Node * node = nullptr;
@@ -949,7 +951,7 @@ Node* CSLoader::nodeWithFlatBuffersFile(const std::string &fileName, const ccNod
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(fileName);
     
     CC_ASSERT(FileUtils::getInstance()->isFileExist(fullPath));
-    
+
     Data buf = FileUtils::getInstance()->getDataFromFile(fullPath);
 
     if (buf.isNull())
@@ -982,7 +984,6 @@ Node* CSLoader::nodeWithFlatBuffersFile(const std::string &fileName, const ccNod
     // decode plist
     auto textures = csparsebinary->textures();
     int textureSize = textures->size();
-    CCLOG("textureSize = %d", textureSize);
     for (int i = 0; i < textureSize; ++i)
     {
         SpriteFrameCache::getInstance()->addSpriteFramesWithFile(textures->Get(i)->c_str());
@@ -1007,7 +1008,6 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree, const
         Node* node = nullptr;
         
         std::string classname = nodetree->classname()->c_str();
-        CCLOG("classname = %s", classname.c_str());
         
         auto options = nodetree->options();
         
@@ -1016,20 +1016,19 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree, const
             auto reader = ProjectNodeReader::getInstance();
             auto projectNodeOptions = (ProjectNodeOptions*)options->data();
             std::string filePath = projectNodeOptions->fileName()->c_str();
-            CCLOG("filePath = %s", filePath.c_str());
             
             cocostudio::timeline::ActionTimeline* action = nullptr;
             if (filePath != "" && FileUtils::getInstance()->isFileExist(filePath))
             {
                 Data buf = FileUtils::getInstance()->getDataFromFile(filePath);
                 node = createNode(buf, callback);
-                action = timeline::ActionTimelineCache::getInstance()->loadAnimationWithDataBuffer(buf, filePath);
+                action = createTimeline(buf, filePath);
             }
             else
             {
                 node = Node::create();
             }
-            reader->setPropsWithFlatBuffers(node, options->data());
+            reader->setPropsWithFlatBuffers(node, (const flatbuffers::Table*)options->data());
             if (action)
             {
                 action->setTimeSpeed(projectNodeOptions->innerActionSpeed());
@@ -1041,11 +1040,12 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree, const
         {
             node = Node::create();
             auto reader = ComAudioReader::getInstance();
-            Component* component = reader->createComAudioWithFlatBuffers(options->data());
+            Component* component = reader->createComAudioWithFlatBuffers((const flatbuffers::Table*)options->data());
             if (component)
             {
+                component->setName(PlayableFrame::PLAYABLE_EXTENTION);
                 node->addComponent(component);
-                reader->setPropsWithFlatBuffers(node, options->data());
+                reader->setPropsWithFlatBuffers(node, (const flatbuffers::Table*)options->data());
             }
         }
         else
@@ -1061,7 +1061,7 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree, const
             NodeReaderProtocol* reader = dynamic_cast<NodeReaderProtocol*>(ObjectFactory::getInstance()->createObject(readername));
             if (reader)
             {
-                node = reader->createNodeWithFlatBuffers(options->data());
+                node = reader->createNodeWithFlatBuffers((const flatbuffers::Table*)options->data());
             }
             
             Widget* widget = dynamic_cast<Widget*>(node);
@@ -1079,7 +1079,6 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree, const
             {
                 _callbackHandlers.pushBack(node);
                 _rootNode = _callbackHandlers.back();
-                CCLOG("after push back _rootNode name = %s", _rootNode->getName().c_str());
             }
             /**/
             //        _loadingNodeParentHierarchy.push_back(node);
@@ -1093,12 +1092,10 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree, const
         
         auto children = nodetree->children();
         int size = children->size();
-        CCLOG("size = %d", size);
         for (int i = 0; i < size; ++i)
         {
             auto subNodeTree = children->Get(i);
             Node* child = nodeWithFlatBuffers(subNodeTree, callback);
-            CCLOG("child = %p", child);
             if (child)
             {
                 PageView* pageView = dynamic_cast<PageView*>(node);
@@ -1142,6 +1139,9 @@ bool CSLoader::bindCallback(const std::string &callbackName,
                             cocos2d::ui::Widget *sender,
                             cocos2d::Node *handler)
 {
+    if (callbackName.empty())
+        return false;
+
     auto callbackHandler = dynamic_cast<WidgetCallBackHandlerProtocol *>(handler);
     if (callbackHandler) //The handler can handle callback
     {
@@ -1177,7 +1177,6 @@ bool CSLoader::bindCallback(const std::string &callbackName,
     CCLOG("callBackName %s cannot be found", callbackName.c_str());
     
     return false;
-    
 }
 
 bool CSLoader::isWidget(const std::string &type)
@@ -1356,7 +1355,6 @@ Node* CSLoader::nodeWithFlatBuffersForSimulator(const flatbuffers::NodeTree *nod
     Node* node = nullptr;
     
     std::string classname = nodetree->classname()->c_str();
-    CCLOG("classname = %s", classname.c_str());
     
     auto options = nodetree->options();
     
@@ -1365,7 +1363,6 @@ Node* CSLoader::nodeWithFlatBuffersForSimulator(const flatbuffers::NodeTree *nod
         auto reader = ProjectNodeReader::getInstance();
         auto projectNodeOptions = (ProjectNodeOptions*)options->data();
         std::string filePath = projectNodeOptions->fileName()->c_str();
-        CCLOG("filePath = %s", filePath.c_str());
         
         cocostudio::timeline::ActionTimeline* action = nullptr;
         if (filePath != "" && FileUtils::getInstance()->isFileExist(filePath))
@@ -1377,7 +1374,7 @@ Node* CSLoader::nodeWithFlatBuffersForSimulator(const flatbuffers::NodeTree *nod
         {
             node = Node::create();
         }
-        reader->setPropsWithFlatBuffers(node, options->data());
+        reader->setPropsWithFlatBuffers(node, (const flatbuffers::Table*)options->data());
         if (action)
         {
             action->setTimeSpeed(projectNodeOptions->innerActionSpeed());
@@ -1389,11 +1386,11 @@ Node* CSLoader::nodeWithFlatBuffersForSimulator(const flatbuffers::NodeTree *nod
     {
         node = Node::create();
         auto reader = ComAudioReader::getInstance();
-        Component* component = reader->createComAudioWithFlatBuffers(options->data());
+        Component* component = reader->createComAudioWithFlatBuffers((const flatbuffers::Table*)options->data());
         if (component)
         {
             node->addComponent(component);
-            reader->setPropsWithFlatBuffers(node, options->data());
+            reader->setPropsWithFlatBuffers(node, (const flatbuffers::Table*)options->data());
         }
     }
     else
@@ -1404,7 +1401,7 @@ Node* CSLoader::nodeWithFlatBuffersForSimulator(const flatbuffers::NodeTree *nod
         NodeReaderProtocol* reader = dynamic_cast<NodeReaderProtocol*>(ObjectFactory::getInstance()->createObject(readername));
         if (reader)
         {
-            node = reader->createNodeWithFlatBuffers(options->data());
+            node = reader->createNodeWithFlatBuffers((const flatbuffers::Table*)options->data());
         }
         
         Widget* widget = dynamic_cast<Widget*>(node);
@@ -1431,12 +1428,10 @@ Node* CSLoader::nodeWithFlatBuffersForSimulator(const flatbuffers::NodeTree *nod
     
     auto children = nodetree->children();
     int size = children->size();
-    CCLOG("size = %d", size);
     for (int i = 0; i < size; ++i)
     {
         auto subNodeTree = children->Get(i);
         Node* child = nodeWithFlatBuffersForSimulator(subNodeTree);
-        CCLOG("child = %p", child);
         if (child)
         {
             PageView* pageView = dynamic_cast<PageView*>(node);
