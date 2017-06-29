@@ -6,8 +6,7 @@
 
 --------------------------------
 -- Toggle layout component enable.<br>
--- param enable Layout Component of a widget<br>
--- return void
+-- param enable Layout Component of a widget
 -- @function [parent=#Widget] setLayoutComponentEnabled 
 -- @param self
 -- @param #bool enable
@@ -250,8 +249,7 @@
         
 --------------------------------
 -- Toggle widget focus status.<br>
--- param focus  pass true to let the widget get focus or pass false to let the widget lose focus<br>
--- return void
+-- param focus  pass true to let the widget get focus or pass false to let the widget lose focus
 -- @function [parent=#Widget] setFocused 
 -- @param self
 -- @param #bool focus
@@ -327,8 +325,7 @@
         
 --------------------------------
 -- Allow widget to accept focus.<br>
--- param enable pass true/false to enable/disable the focus ability of a widget<br>
--- return void
+-- param enable pass true/false to enable/disable the focus ability of a widget
 -- @function [parent=#Widget] setFocusEnabled 
 -- @param self
 -- @param #bool enable
@@ -351,8 +348,7 @@
 --------------------------------
 -- Dispatch a EventFocus through a EventDispatcher<br>
 -- param widgetLoseFocus  The widget which lose its focus<br>
--- param widgetGetFocus he widget which get its focus<br>
--- return void
+-- param widgetGetFocus he widget which get its focus
 -- @function [parent=#Widget] dispatchFocusEvent 
 -- @param self
 -- @param #ccui.Widget widgetLoseFocus
@@ -361,8 +357,7 @@
         
 --------------------------------
 -- Toggle use unify size.<br>
--- param enable True to use unify size, false otherwise.<br>
--- return void
+-- param enable True to use unify size, false otherwise.
 -- @function [parent=#Widget] setUnifySizeEnabled 
 -- @param self
 -- @param #bool enable
@@ -375,13 +370,6 @@
 -- @function [parent=#Widget] isPropagateTouchEvents 
 -- @param self
 -- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- Return a current focused widget in your UI scene.<br>
--- No matter what widget object you call this method on , it will return you the exact one focused widget.
--- @function [parent=#Widget] getCurrentFocusedWidget 
--- @param self
--- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
 -- Checks a point is in widget's content space.<br>
@@ -421,8 +409,7 @@
 --------------------------------
 -- This method is called when a focus change event happens<br>
 -- param widgetLostFocus  The widget which lose its focus<br>
--- param widgetGetFocus  The widget which get its focus<br>
--- return void
+-- param widgetGetFocus  The widget which get its focus
 -- @function [parent=#Widget] onFocusChange 
 -- @param self
 -- @param #ccui.Widget widgetLostFocus
@@ -550,6 +537,13 @@
 -- @param self
 -- @param #bool enable
 -- @return Widget#Widget self (return value: ccui.Widget)
+        
+--------------------------------
+-- Return a current focused widget in your UI scene.<br>
+-- No matter what widget object you call this method on , it will return you the exact one focused widget.
+-- @function [parent=#Widget] getCurrentFocusedWidget 
+-- @param self
+-- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
 -- Create and return a empty Widget instance pointer.

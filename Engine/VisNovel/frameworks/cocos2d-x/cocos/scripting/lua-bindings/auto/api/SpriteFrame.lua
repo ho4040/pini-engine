@@ -5,6 +5,14 @@
 -- @parent_module cc
 
 --------------------------------
+--  Set anchor point of the frame.<br>
+-- param anchorPoint The anchor point of the sprite frame.
+-- @function [parent=#SpriteFrame] setAnchorPoint 
+-- @param self
+-- @param #vec2_table anchorPoint
+-- @return SpriteFrame#SpriteFrame self (return value: cc.SpriteFrame)
+        
+--------------------------------
 --  Set texture of the frame, the texture is retained.<br>
 -- param pobTexture The texture of the sprite frame.
 -- @function [parent=#SpriteFrame] setTexture 
@@ -43,6 +51,14 @@
 -- @return SpriteFrame#SpriteFrame self (return value: cc.SpriteFrame)
         
 --------------------------------
+--  Get center rect of the frame.<br>
+-- Useful to create 9-slice sprites<br>
+-- return The center rect of the sprite frame in points
+-- @function [parent=#SpriteFrame] getCenterRect 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
+        
+--------------------------------
 --  Set rect of the sprite frame.<br>
 -- param rectInPixels The rect of the sprite frame, in pixels.
 -- @function [parent=#SpriteFrame] setRectInPixels 
@@ -56,6 +72,20 @@
 -- @function [parent=#SpriteFrame] getRect 
 -- @param self
 -- @return rect_table#rect_table ret (return value: rect_table)
+        
+--------------------------------
+-- setCenterRect<br>
+-- Useful to implement "9 sliced" sprites.<br>
+-- The sprite will be sliced into a 3 x 3 grid. The four corners of this grid are applied without<br>
+-- performing any scaling. The upper- and lower-middle parts are scaled horizontally, and the left- and right-middle parts are scaled vertically.<br>
+-- The center is scaled in both directions.<br>
+-- Important: The scaling is based the Sprite's trimmed size.<br>
+-- Limitations: Does not work when the sprite is part of `SpriteBatchNode`.<br>
+-- param centerRect the Rect in points
+-- @function [parent=#SpriteFrame] setCenterRectInPixels 
+-- @param self
+-- @param #rect_table centerRect
+-- @return SpriteFrame#SpriteFrame self (return value: cc.SpriteFrame)
         
 --------------------------------
 --  Set offset of the frame.<br>
@@ -125,6 +155,13 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+--  hasCenterRect<br>
+-- return Whether or not it has a centerRect
+-- @function [parent=#SpriteFrame] hasCenterRect 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  Set rotated of the sprite frame.<br>
 -- param rotated Rotated the sprite frame if true.
 -- @function [parent=#SpriteFrame] setRotated 
@@ -146,6 +183,20 @@
 -- @param self
 -- @param #size_table sizeInPixels
 -- @return SpriteFrame#SpriteFrame self (return value: cc.SpriteFrame)
+        
+--------------------------------
+--  Get anchor point of the frame.<br>
+-- return The anchor point of the sprite frame.
+-- @function [parent=#SpriteFrame] getAnchorPoint 
+-- @param self
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
+        
+--------------------------------
+--  Check if anchor point is defined for the frame.<br>
+-- return true if anchor point is available.
+-- @function [parent=#SpriteFrame] hasAnchorPoint 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 --  Get offset of the frame.<br>

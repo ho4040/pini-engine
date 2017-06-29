@@ -241,7 +241,7 @@ class NativeType(object):
                 nt.is_enum = ntype.get_canonical().kind == cindex.TypeKind.ENUM
 
                 if nt.name == "std::function":
-                    nt.namespaced_name = get_namespaced_name(cdecl)                    
+                    nt.namespaced_name = get_namespaced_name(cdecl)
                     r = re.compile('function<(.+) .*\((.*)\)>').search(cdecl.displayname)
                     (ret_type, params) = r.groups()
                     params = filter(None, params.split(", "))
@@ -456,8 +456,6 @@ class NativeField(object):
 
     @staticmethod
     def can_parse(ntype):
-        if ntype.kind == cindex.TypeKind.POINTER:
-            return False
         native_type = NativeType.from_type(ntype)
         if ntype.kind == cindex.TypeKind.UNEXPOSED and native_type.name != "std::string":
             return False
@@ -545,9 +543,9 @@ class NativeFunction(object):
             ("\r\n", "\n"),
             ("\n(\s)*\*", "\n"),
             ("\n(\s)*@","\n"),
-            ("\n(\s)*","\n"), 
+            ("\n(\s)*","\n"),
             ("\n(\s)*\n", "\n"),
-            ("^(\s)*\n",""), 
+            ("^(\s)*\n",""),
             ("\n(\s)*$", ""),
             ("\n","<br>\n"),
             ("\n", "\n-- ")
@@ -643,9 +641,9 @@ class NativeOverloadedFunction(object):
             ("\r\n", "\n"),
             ("\n(\s)*\*", "\n"),
             ("\n(\s)*@","\n"),
-            ("\n(\s)*","\n"), 
+            ("\n(\s)*","\n"),
             ("\n(\s)*\n", "\n"),
-            ("^(\s)*\n",""), 
+            ("^(\s)*\n",""),
             ("\n(\s)*$", ""),
             ("\n","<br>\n"),
             ("\n", "\n-- ")
@@ -824,7 +822,7 @@ class NativeClass(object):
             m['impl'].generate_code(self)
         for m in self.static_methods_clean():
             m['impl'].generate_code(self)
-        if self.generator.script_type == "lua":  
+        if self.generator.script_type == "lua":
             for m in self.override_methods_clean():
                 m['impl'].generate_code(self, is_override = True)
         for m in self.public_fields:
@@ -975,6 +973,7 @@ class Generator(object):
     def __init__(self, opts):
         self.index = cindex.Index.create()
         self.outdir = opts['outdir']
+        self.search_path = opts['search_path']
         self.prefix = opts['prefix']
         self.headers = opts['headers'].split(' ')
         self.classes = opts['classes']
@@ -1186,7 +1185,7 @@ class Generator(object):
             docfilepath = os.path.join(docfiledir, self.out_file + "_api.lua")
         else:
             docfilepath = os.path.join(docfiledir, self.out_file + "_api.js")
-        
+
         self.impl_file = open(implfilepath, "w+")
         self.head_file = open(headfilepath, "w+")
         self.doc_file = open(docfilepath, "w+")
@@ -1220,13 +1219,19 @@ class Generator(object):
 
 
     def _pretty_print(self, diagnostics):
+        errors=[]
+        for idx, d in enumerate(diagnostics):
+            if d.severity > 2:
+                errors.append(d)
+        if len(errors) == 0:
+            return
         print("====\nErrors in parsing headers:")
         severities=['Ignored', 'Note', 'Warning', 'Error', 'Fatal']
-        for idx, d in enumerate(diagnostics):
+        for idx, d in enumerate(errors):
             print "%s. <severity = %s,\n    location = %r,\n    details = %r>" % (
                 idx+1, severities[d.severity], d.location, d.spelling)
         print("====\n")
-        
+
     def _parse_headers(self):
         for header in self.headers:
             tu = self.index.parse(header, self.clang_args)
@@ -1460,6 +1465,9 @@ def main():
     userconfig.read('userconf.ini')
     print 'Using userconfig \n ', userconfig.items('DEFAULT')
 
+    clang_lib_path = os.path.join(userconfig.get('DEFAULT', 'cxxgeneratordir'), 'libclang')
+    cindex.Config.set_library_path(clang_lib_path);
+
     config = ConfigParser.SafeConfigParser()
     config.read(args[0])
 
@@ -1515,6 +1523,7 @@ def main():
                 'clang_args': (config.get(s, 'extra_arguments', 0, dict(userconfig.items('DEFAULT'))) or "").split(" "),
                 'target': os.path.join(workingdir, "targets", t),
                 'outdir': outdir,
+                'search_path': os.path.abspath(os.path.join(userconfig.get('DEFAULT', 'cocosdir'), 'cocos')),
                 'remove_prefix': config.get(s, 'remove_prefix'),
                 'target_ns': config.get(s, 'target_namespace'),
                 'cpp_ns': config.get(s, 'cpp_namespace').split(' ') if config.has_option(s, 'cpp_namespace') else None,

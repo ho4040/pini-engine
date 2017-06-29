@@ -6,10 +6,14 @@ import com.loopj.android.http.BinaryHttpResponseHandler;
 import com.loopj.android.http.FileAsyncHttpResponseHandler;
 import com.loopj.android.http.RequestHandle;
 
-import org.apache.http.Header;
-import org.apache.http.message.BasicHeader;
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.message.BasicHeader;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.*;
 
 class DataTaskHandler extends BinaryHttpResponseHandler {
@@ -60,6 +64,51 @@ class DataTaskHandler extends BinaryHttpResponseHandler {
     }
 }
 
+class HeadTaskHandler extends AsyncHttpResponseHandler {
+    int _id;
+    String _host;
+    String _url;
+    String _path;
+    private Cocos2dxDownloader _downloader;
+
+    void LogD(String msg) {
+        android.util.Log.d("Cocos2dxDownloader", msg);
+    }
+
+    public HeadTaskHandler(Cocos2dxDownloader downloader, int id, String host, String url, String path) {
+        super();
+        _downloader = downloader;
+        _id = id;
+        _host = host;
+        _url = url;
+        _path = path;
+    }
+
+    @Override
+    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+        Boolean acceptRanges = false;
+        for (int i = 0; i < headers.length; ++i) {
+            Header elem = headers[i];
+            if (elem.getName().equals("Accept-Ranges")) {
+                acceptRanges = elem.getValue().equals("bytes");
+                break;
+            }
+        }
+        Cocos2dxDownloader.setResumingSupport(_host, acceptRanges);
+        Cocos2dxDownloader.createTask(_downloader, _id, _url, _path);
+    }
+
+    @Override
+    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable throwable) {
+        LogD("onFailure(code:" + statusCode + " headers:" + headers + " throwable:" + throwable + " id:" + _id);
+        String errStr = "";
+        if (null != throwable) {
+            errStr = throwable.toString();
+        }
+        _downloader.onFinish(_id, statusCode, errStr, null);
+    }
+}
+
 class FileTaskHandler extends FileAsyncHttpResponseHandler {
     int _id;
     File _finalFile;
@@ -99,6 +148,7 @@ class FileTaskHandler extends FileAsyncHttpResponseHandler {
     @Override
     public void onFinish() {
         // onFinish called after onSuccess/onFailure
+        _downloader.runNextTaskIfExists();
     }
 
     @Override
@@ -166,7 +216,11 @@ public class Cocos2dxDownloader {
     private int _id;
     private AsyncHttpClient _httpClient = new AsyncHttpClient();
     private String _tempFileNameSufix;
+    private int _countOfMaxProcessingTasks;
     private HashMap _taskMap = new HashMap();
+    private Queue<Runnable> _taskQueue = new LinkedList<Runnable>();
+    private int _runningTaskCount = 0;
+    private static HashMap<String, Boolean> _resumingSupport = new HashMap<String, Boolean>();
 
     void onProgress(final int id, final long downloadBytes, final long downloadNow, final long downloadTotal) {
         DownloadTask task = (DownloadTask)_taskMap.get(id);
@@ -202,7 +256,11 @@ public class Cocos2dxDownloader {
         });
     }
 
-    public static Cocos2dxDownloader createDownloader(int id, int timeoutInSeconds, String tempFileNameSufix) {
+    public static void setResumingSupport(String host, Boolean support) {
+        Cocos2dxDownloader._resumingSupport.put(host, support);
+    }
+
+    public static Cocos2dxDownloader createDownloader(int id, int timeoutInSeconds, String tempFileNameSufix, int countOfMaxProcessingTasks) {
         Cocos2dxDownloader downloader = new Cocos2dxDownloader();
         downloader._id = id;
 
@@ -214,6 +272,7 @@ public class Cocos2dxDownloader {
         downloader._httpClient.allowRetryExceptionClass(javax.net.ssl.SSLException.class);
 
         downloader._tempFileNameSufix = tempFileNameSufix;
+        downloader._countOfMaxProcessingTasks = countOfMaxProcessingTasks;
         return downloader;
     }
 
@@ -222,7 +281,7 @@ public class Cocos2dxDownloader {
         final String url = url_;
         final String path = path_;
 
-        Cocos2dxHelper.getActivity().runOnUiThread(new Runnable() {
+        Runnable taskRunnable = new Runnable() {
             @Override
             public void run() {
                 DownloadTask task = new DownloadTask();
@@ -234,6 +293,29 @@ public class Cocos2dxDownloader {
 
                 do {
                     if (0 == path.length()) break;
+
+                    String domain;
+                    try {
+                        URI uri = new URI(url);
+                        domain = uri.getHost();
+                    }
+                    catch (URISyntaxException e) {
+                        break;
+                    }
+                    final String host = domain.startsWith("www.") ? domain.substring(4) : domain;
+                    Boolean supportResuming = false;
+                    Boolean requestHeader = true;
+                    if (_resumingSupport.containsKey(host)) {
+                        supportResuming = _resumingSupport.get(host);
+                        requestHeader = false;
+                    }
+
+                    if (requestHeader) {
+                        task.handler = new HeadTaskHandler(downloader, id, host, url, path);
+                        task.handle = downloader._httpClient.head(Cocos2dxHelper.getActivity(), url, null, null, task.handler);
+                        break;
+                    }
+
                     // file task
                     File tempFile = new File(path + downloader._tempFileNameSufix);
                     if (tempFile.isDirectory()) break;
@@ -247,14 +329,23 @@ public class Cocos2dxDownloader {
                     task.handler = new FileTaskHandler(downloader, id, tempFile, finalFile);
                     Header[] headers = null;
                     long fileLen = tempFile.length();
-                    if (fileLen > 0) {
+                    if (supportResuming && fileLen > 0) {
                         // continue download
                         List<Header> list = new ArrayList<Header>();
                         list.add(new BasicHeader("Range", "bytes=" + fileLen + "-"));
                         headers = list.toArray(new Header[list.size()]);
                     }
+                    else if (fileLen > 0) {
+                        // Remove previous downloaded context
+                        try {
+                            PrintWriter writer = new PrintWriter(tempFile);
+                            writer.print("");
+                            writer.close();
+                        }
+                        // Not found then nothing to do
+                        catch (FileNotFoundException e) {}
+                    }
                     task.handle = downloader._httpClient.get(Cocos2dxHelper.getActivity(), url, headers, null, task.handler);
-                    //task.handle = downloader._httpClient.get(url, task.handler);
                 } while (false);
 
                 if (null == task.handle) {
@@ -269,7 +360,8 @@ public class Cocos2dxDownloader {
                     downloader._taskMap.put(id, task);
                 }
             }
-        });
+        };
+        downloader.enqueueTask(taskRunnable);
     }
 
     public static void cancelAllRequests(final Cocos2dxDownloader downloader) {
@@ -289,6 +381,29 @@ public class Cocos2dxDownloader {
                 }
             }
         });
+    }
+
+
+    public void enqueueTask(Runnable taskRunnable) {
+        synchronized (_taskQueue) {
+            if (_runningTaskCount < _countOfMaxProcessingTasks) {
+                Cocos2dxHelper.getActivity().runOnUiThread(taskRunnable);
+                _runningTaskCount++;
+            } else {
+                _taskQueue.add(taskRunnable);
+            }
+        }
+    }
+
+    public void runNextTaskIfExists() {
+        synchronized (_taskQueue) {
+            Runnable taskRunnable = Cocos2dxDownloader.this._taskQueue.poll();
+            if (taskRunnable != null) {
+                Cocos2dxHelper.getActivity().runOnUiThread(taskRunnable);
+            } else {
+                _runningTaskCount--;
+            }
+        }
     }
 
     native void nativeOnProgress(int id, int taskId, long dl, long dlnow, long dltotal);

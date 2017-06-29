@@ -3,12 +3,11 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros">
     <EngineRoot>$(MSBuildThisFileDirectory)..\..\</EngineRoot>
-    <PiniDist>$(OutDir)../../../../../window64</PiniDist>
   </PropertyGroup>
   <PropertyGroup />
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos;$(EngineRoot)cocos\platform;$(EngineRoot)cocos\platform\desktop;$(EngineRoot)external\glfw3\include\win32;$(EngineRoot)external\win32-specific\gles\include\OGLES;$(EngineRoot)external\freetype2\include\win32\freetype2;$(EngineRoot)external\freetype2\include\win32\;$(EngineRoot)external</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos;$(EngineRoot)cocos/editor-support;$(EngineRoot)external\glfw3\include\win32;$(EngineRoot)external\win32-specific\gles\include\OGLES;$(EngineRoot)external\freetype2\include\win32\freetype2;$(EngineRoot)external\freetype2\include\win32\;$(EngineRoot)external;$(EngineRoot)external\openssl\include\win32</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_VARIADIC_MAX=10;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <ProjectReference>
@@ -19,9 +18,6 @@
     <BuildMacro Include="EngineRoot">
       <Value>$(EngineRoot)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
-    </BuildMacro>
-    <BuildMacro Include="PiniDist">
-      <Value>$(PiniDist)</Value>
     </BuildMacro>
   </ItemGroup>
 </Project>

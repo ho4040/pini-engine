@@ -21,7 +21,7 @@
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 
-#include "AudioEngine-winrt.h"
+#include "audio/winrt/AudioEngine-winrt.h"
 #include "platform/CCFileUtils.h"
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
@@ -38,15 +38,14 @@ AudioEngineImpl::AudioEngineImpl()
 
 AudioEngineImpl::~AudioEngineImpl()
 {
+    auto scheduler = cocos2d::Director::getInstance()->getScheduler();
+    scheduler->unschedule(schedule_selector(AudioEngineImpl::update), this);
     _audioCaches.clear();
 }
 
 bool AudioEngineImpl::init()
 {
-    bool ret = false;
-
-    ret = true;
-    return ret;
+    return true;
 }
 
 AudioCache* AudioEngineImpl::preload(const std::string& filePath, std::function<void(bool)> callback)

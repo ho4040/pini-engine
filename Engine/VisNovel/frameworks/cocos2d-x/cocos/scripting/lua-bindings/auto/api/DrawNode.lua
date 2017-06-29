@@ -47,7 +47,7 @@
 -- 
 -- @function [parent=#DrawNode] setLineWidth 
 -- @param self
--- @param #int lineWidth
+-- @param #float lineWidth
 -- @return DrawNode#DrawNode self (return value: cc.DrawNode)
         
 --------------------------------
@@ -184,6 +184,12 @@
 -- @param #vec2_table destination
 -- @param #color4f_table color
 -- @return DrawNode#DrawNode self (return value: cc.DrawNode)
+        
+--------------------------------
+-- 
+-- @function [parent=#DrawNode] getLineWidth 
+-- @param self
+-- @return float#float ret (return value: float)
         
 --------------------------------
 --  Draw a point.<br>

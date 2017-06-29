@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies
+Copyright (c) 2013-2017 Chukong Technologies
 
 http://www.cocos2d-x.org
 
@@ -156,6 +156,11 @@ public:
     int                 _luaID;
     /// scriptObject, support for swift
     void* _scriptObject;
+
+    /**
+     When true, it means that the object was already rooted.
+     */
+    bool _rooted;
 #endif
 
     // Memory leak diagnostic data (only included when CC_REF_LEAK_DETECTION is defined and its value isn't zero)

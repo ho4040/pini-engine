@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2015 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -267,6 +267,18 @@ public:
     virtual void updateProjection() = 0;
 };
 
+/**
+ * interface for playable items
+ */
+class CC_DLL PlayableProtocol
+{
+public:
+    virtual ~PlayableProtocol(){}
+    
+    virtual void start() = 0;
+    
+    virtual void stop() = 0;
+};
 NS_CC_END
 
 /// @endcond

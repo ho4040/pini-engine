@@ -12,7 +12,7 @@ class SimulatorWin
 public:
     static SimulatorWin *getInstance();
     virtual ~SimulatorWin();
-    int run(bool fullscreen = false);
+    int run();
 
     virtual void quit();
     virtual void relaunch();
@@ -22,8 +22,6 @@ public:
 
     virtual int getPositionX();
     virtual int getPositionY();
-
-	void setTitle(char* name);
 protected:
     SimulatorWin();
 
@@ -37,7 +35,6 @@ protected:
     // 
     void setupUI();
     void setZoom(float frameScale);
-
 
     // debug log
     void writeDebugLog(const char *log);

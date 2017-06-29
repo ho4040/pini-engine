@@ -3,7 +3,7 @@ Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Valentin Milea
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-CopyRight (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -140,10 +140,38 @@ public:
      * @js NA
      */
     ssize_t getNumberOfRunningActionsInTarget(const Node *target) const;
+    
+    /** Returns the numbers of actions that are running in all targets.
+     * Composable actions are counted as 1 action. Example:
+     * - If you are running 1 Sequence of 7 actions, it will return 1.
+     * - If you are running 7 Sequences of 2 actions, it will return 7.
+     *
+     * @return  The numbers of actions that are running in a certain target.
+     * @js NA
+     */
+    ssize_t getNumberOfRunningActions() const;
 
     /** @deprecated Use getNumberOfRunningActionsInTarget() instead.
      */
-    CC_DEPRECATED_ATTRIBUTE inline ssize_t numberOfRunningActionsInTarget(Node *target) const { return getNumberOfRunningActionsInTarget(target); }
+    CC_DEPRECATED_ATTRIBUTE ssize_t numberOfRunningActionsInTarget(Node *target) const { return getNumberOfRunningActionsInTarget(target); }
+
+
+    /** Returns the numbers of actions that are running in a
+     *  certain target with a specific tag.
+     * Like getNumberOfRunningActionsInTarget Composable actions
+     * are counted as 1 action. Example:
+     * - If you are running 1 Sequence of 7 actions, it will return 1.
+     * - If you are running 7 Sequences of 2 actions, it will return 7.
+     *
+     * @param target    A certain target.
+     * @param tag       Tag that will be searched.
+     * @return  The numbers of actions that are running in a certain target
+     *          with a specific tag.
+     * @see getNumberOfRunningActionsInTarget
+     * @js NA
+     */
+    size_t getNumberOfRunningActionsInTargetByTag(const Node *target, int tag);
+
 
     /** Pauses the target: all running actions and newly added actions will be paused.
      *
