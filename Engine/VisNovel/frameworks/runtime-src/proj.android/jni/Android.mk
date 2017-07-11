@@ -11,9 +11,6 @@ LOCAL_MODULE_FILENAME := libcocos2dlua
 
 LOCAL_SRC_FILES := \
 ../../Classes/AppDelegate.cpp \
-../../Classes/ide-support/SimpleConfigParser.cpp \
-../../Classes/ide-support/RuntimeLuaImpl.cpp \
-../../Classes/ide-support/lua_debugger.c \
 hellolua/main.cpp \
 ../../Classes/AppDelegateEvent.cpp \
 ../../Classes/VideoPlayer.cpp \

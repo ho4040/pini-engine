@@ -10,7 +10,9 @@
 
 #include "AppDelegateEvent.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 )
 #include <Windows.h>
+#endif
 
 #include <mutex>
 #include <thread>
