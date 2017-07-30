@@ -2,5 +2,5 @@
 package com.android.vending.expansion.zipfile;
 
 public final class BuildConfig {
-    public final static boolean DEBUG = true;
+    public final static boolean DEBUG = false;
 }

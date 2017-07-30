@@ -9,6 +9,7 @@ proj.sublime-workspace
 *.apk
 *.sdf
 *.db
+*.pdb
 *.opensdf
 .vs/
 NONE
