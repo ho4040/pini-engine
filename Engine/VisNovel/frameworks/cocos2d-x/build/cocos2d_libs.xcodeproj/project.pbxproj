@@ -17709,6 +17709,7 @@
 					"\"$(SRCROOT)/../external/curl/prebuilt/mac\"",
 					"\"$(SRCROOT)/../external/zlib/prebuilt/mac\"",
 					"$(SRCROOT)/../external/openssl/prebuilt/mac",
+					"$(SRCROOT)/../external/",
 				);
 				MACH_O_TYPE = staticlib;
 				OTHER_LDFLAGS = "-llibsql3";
@@ -17747,6 +17748,7 @@
 					"\"$(SRCROOT)/../external/curl/prebuilt/mac\"",
 					"\"$(SRCROOT)/../external/zlib/prebuilt/mac\"",
 					"$(SRCROOT)/../external/openssl/prebuilt/mac",
+					"$(SRCROOT)/../external/",
 				);
 				MACH_O_TYPE = staticlib;
 				OTHER_LDFLAGS = "-llibsql3";

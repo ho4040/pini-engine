@@ -873,6 +873,7 @@
 					"$(SRCROOT)/../../../../external/glfw3/include/mac",
 					"$(SRCROOT)/../lib",
 					"$(SRCROOT)/../lib/protobuf-lite",
+					"$(SRCROOT)/../../../../external/",
 				);
 				INFOPLIST_PREFIX_HEADER = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -904,6 +905,7 @@
 					"$(SRCROOT)/../../../../external/glfw3/include/mac",
 					"$(SRCROOT)/../lib",
 					"$(SRCROOT)/../lib/protobuf-lite",
+					"$(SRCROOT)/../../../../external/",
 				);
 				INFOPLIST_PREFIX_HEADER = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
