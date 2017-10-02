@@ -90,8 +90,8 @@ def compile_run(debug=False,repeat=True,TestRun=False, suffix=".apk", b=False):
 
 		#"com.nooslab.pini_remote"
 
-		print "cocos compile -s "+myjoin(cwd,"VisNovel")+" -p android -m "+str_mode+" --ap android-14 --compile-script 0"
-		print os.system("cocos compile -s "+myjoin(cwd,"VisNovel")+" -p android -m "+str_mode+" --ap android-14 --compile-script 0")
+		print "cocos compile -s "+myjoin(cwd,"VisNovel")+" -p android -m "+str_mode+" --ap android-21 --compile-script 0"
+		print os.system("cocos compile -s "+myjoin(cwd,"VisNovel")+" -p android -m "+str_mode+" --ap android-21 --compile-script 0")
 
 		newapk = myjoin(cwd,"android","PiniRemote"+suffix)
 

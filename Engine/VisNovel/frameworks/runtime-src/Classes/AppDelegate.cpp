@@ -77,7 +77,8 @@ AppDelegate::AppDelegate(bool fullscreen)
 	//CCLOG(">>> %d", m_pALCtx);
 #else
 #endif
-	experimental::AudioEngine::lazyInit();	ATL::getInstance();
+	// experimental::AudioEngine::lazyInit();	
+	ATL::getInstance();
 }
 
 AppDelegate::~AppDelegate()
@@ -170,7 +171,7 @@ void AppDelegate::applicationDidEnterBackground()
 {
     Director::getInstance()->stopAnimation();
 
-	experimental::AudioEngine::pauseAll();
+	// experimental::AudioEngine::pauseAll();
 
 	list<AppDelegateEvent*>::iterator b = _eventNode.begin();
 	list<AppDelegateEvent*>::iterator e = _eventNode.end();
@@ -184,7 +185,7 @@ void AppDelegate::applicationWillEnterForeground()
 {
     Director::getInstance()->startAnimation();
 
-	experimental::AudioEngine::resumeAll();
+	// experimental::AudioEngine::resumeAll();
 
 	list<AppDelegateEvent*>::iterator b = _eventNode.begin();
 	list<AppDelegateEvent*>::iterator e = _eventNode.end();

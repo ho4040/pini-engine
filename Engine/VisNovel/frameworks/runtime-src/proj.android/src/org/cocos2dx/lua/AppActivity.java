@@ -68,6 +68,8 @@ import com.adop.sdk.BaseAdView;
 import com.vungle.publisher.VunglePub;
 import com.vungle.publisher.EventListener;
 
+import android.os.Build;
+
 import android.content.pm.PackageManager.NameNotFoundException;
 import com.google.android.vending.expansion.downloader.Helpers;
 import com.google.android.vending.expansion.downloader.DownloaderClientMarshaller;
@@ -145,6 +147,17 @@ public class AppActivity extends Cocos2dxActivity implements IDownloaderClient{
             }
             hostIPAdress = getHostIpAddress();
         }
+
+        int uiOption = getWindow().getDecorView().getSystemUiVisibility();
+        if( Build.VERSION.SDK_INT >= 14 )
+            uiOption |= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        if( Build.VERSION.SDK_INT >= 16 )
+            uiOption |= View.SYSTEM_UI_FLAG_FULLSCREEN;
+        if( Build.VERSION.SDK_INT >= 19 )
+            uiOption |= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+
+        getWindow().getDecorView().setSystemUiVisibility( uiOption );
+
     }
 
     //FOR EXTENSION FILE!
@@ -269,6 +282,22 @@ public class AppActivity extends Cocos2dxActivity implements IDownloaderClient{
             CallLua("PINI_OBB_DOWNLOAD_RESULT",ret);
         }
     }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+            if (hasFocus) {
+                // getWindow().getDecorView().setSystemUiVisibility(
+                //         View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                //                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                //                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                //                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                //                 | View.SYSTEM_UI_FLAG_FULLSCREEN
+                //                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        }
+    }
+
+
     @Override
     public void onDownloadProgress(DownloadProgressInfo progress){
         Log.d("cocos2d-x",">>>onDownloadProgress");
