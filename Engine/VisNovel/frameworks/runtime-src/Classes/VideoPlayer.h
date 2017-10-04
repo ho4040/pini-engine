@@ -8,6 +8,15 @@
 #include "AL/alc.h"
 #include "AL/alext.h"
 
+extern "C" {
+#include "libavcodec/avcodec.h"
+#include "libavformat/avformat.h"
+#include "libavutil/mathematics.h"
+#include "libswscale/swscale.h"
+#include "libavutil/avutil.h"
+#include "libswresample/swresample.h"
+}
+
 #include "AppDelegateEvent.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 )
@@ -18,15 +27,6 @@
 #include <thread>
 #include <condition_variable>
 #include <list>
-
-extern "C" {
-	#include "libavcodec/avcodec.h"
-	#include "libavformat/avformat.h"
-	#include "libavutil/mathematics.h"
-	#include "libswscale/swscale.h"
-	#include "libavutil/avutil.h"
-	#include "libswresample/swresample.h"
-}
 
 using namespace std;
 using namespace cocos2d;

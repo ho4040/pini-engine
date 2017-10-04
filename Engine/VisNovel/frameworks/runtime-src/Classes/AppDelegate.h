@@ -7,8 +7,11 @@
 #include <list>
 using namespace std;
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
 #include "AL/al.h"
 #include "AL/alc.h"
+#endif
+
 /**
 @brief    The cocos2d Application.
 
@@ -18,9 +21,12 @@ class  AppDelegate : private cocos2d::Application
 {
 private:
 	std::list<AppDelegateEvent*> _eventNode;
-
+    
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
 	ALCdevice		*m_pDevice;
 	ALCcontext		*m_pALCtx;
+#endif
+
 	bool			 m_bFullscreen;
 public:
 	AppDelegate(bool fullscreen = false);

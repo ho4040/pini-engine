@@ -17,7 +17,12 @@
 
 #include "lua_utils.h"
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
 #include "VideoPlayer.h"
+#else
+#include "VideoPlayer_iOS.h"
+#endif
+
 #include "TextInput.h"
 #include "audio/include/AudioEngine.h"
 
