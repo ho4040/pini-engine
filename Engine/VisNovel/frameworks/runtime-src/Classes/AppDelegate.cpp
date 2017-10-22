@@ -156,6 +156,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 		engine->executeString("_FULLSCREEN = false");
 	}
 
+	CCFileUtils::getInstance()->addSearchPath("src", true);
+	CCFileUtils::getInstance()->addSearchPath("res", true);
+
 //#if (COCOS2D_DEBUG > 0) && (CC_CODE_IDE_DEBUG_SUPPORT > 0)
 //    // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
 //    auto runtimeEngine = RuntimeEngine::getInstance();

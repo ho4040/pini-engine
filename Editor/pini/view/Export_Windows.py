@@ -609,7 +609,7 @@ OutFile "installer.exe" ; 설치 파일 이름
 					if os.path.isdir(os.path.dirname(dist)) == False :
 						os.makedirs(os.path.dirname(dist))
 
-					if ext==".lua" : 
+					if False : 
 						self.compile_cocos_lua(path,dist)
 					else:
 						fr = open(path, 'rb')
@@ -708,9 +708,8 @@ OutFile "installer.exe" ; 설치 파일 이름
 			out = None
 			fp.close()
 
-			self.compile_cocos_lua(EEP,EEP)
-			
-			os.remove(EEP)
+			# self.compile_cocos_lua(EEP,EEP)
+			# os.remove(EEP)
 
 			files = [ f for f in os.listdir(APPPATH) if os.path.isfile(os.path.join(APPPATH,f)) ]
 			for v in files:

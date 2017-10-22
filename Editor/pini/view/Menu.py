@@ -475,6 +475,8 @@ def __run__(clean,isCurrentScene,startLine=None):
 		BUILDPATH = ProjectController().path + "/build/"
 		BUILDPATH = BUILDPATH.replace("\\","/")
 		
+		print BUILDPATH
+
 		if clean : 
 			try:
 				shutil.rmtree(dispath)
@@ -531,7 +533,14 @@ def __run__(clean,isCurrentScene,startLine=None):
 				if ProjectController().fullscreen : 
 					proc = subprocess.Popen([APPPATH+"/pini_remote.exe","--fullscreen"], cwd=APPPATH)
 				else:
-					proc = subprocess.Popen([APPPATH+"/pini_remote.exe","--nonfullscreen"], cwd=APPPATH)
+					print [APPPATH+"/pini_remote.exe","--nonfullscreen"], APPPATH
+					print [APPPATH+"/pini_remote.exe","--nonfullscreen"], APPPATH
+					print [APPPATH+"/pini_remote.exe","--nonfullscreen"], APPPATH
+					print [APPPATH+"/pini_remote.exe","--nonfullscreen"], APPPATH
+					print [APPPATH+"/pini_remote.exe","--nonfullscreen"], APPPATH
+					print [APPPATH+"/pini_remote.exe","--nonfullscreen"], APPPATH
+					print [APPPATH+"/pini_remote.exe","--nonfullscreen"], APPPATH
+					proc = subprocess.Popen([APPPATH+"/pini_remote.exe","--nonfullscreen","-workdir "+APPPATH], cwd=APPPATH)
 		def remoting():
 			remote = RemoteClient(NoriterMain())
 			if inst:

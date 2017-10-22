@@ -118,6 +118,14 @@ cd Editor
 python dist_pini.py
 ```
 
+iOS용 게임 빌드하기
+-------------
+1. iOS용 빌드를 위해서는 OSX운영체제의 PC와 XCode가 필요합니다.
+2. 엔진 전체 코드를 pull 받습니다.
+3. 피니엔진을 이용하여 window 버전을 export합니다.
+4. export된 폴더에 res, src 폴더를 각각 "pini-engine/Engine/VisNovel/src","pini-engine/Engine/VisNovel/res"에 복사합니다.
+5. pini-engine/Engine/VisNovel/frameworks/runtime-src/proj.ios_mac/pini_remote.xcodeproj 을 열고 빌드를 시작합니다.
+
 
 작업 된 내용
 1. 인앱결제 안되던 문제 수정
@@ -127,10 +135,10 @@ python dist_pini.py
 5. 로컬푸시로 앱 진입 시 튕기는 문제 수정
 6. 깃헙 연결 메뉴 추가
 7. 후원자 리스트 메뉴 추가
+8. iOS빌드 지원
+9. 소프트키 자동 숨김 기능 추가
 
 해야하는 작업
-1. 소프트키 자동 숨김 기능 추가
-2. iOS빌드 지원
 3. 피니엔진 에디터 사용중 작업중인 내용이 자동저장될때 에디터가 넘춰버림, 메모리사용량이 급증하는 현상이 발견됨
 4. 업데이트하여 변화된 내용 위키에 표시
 
