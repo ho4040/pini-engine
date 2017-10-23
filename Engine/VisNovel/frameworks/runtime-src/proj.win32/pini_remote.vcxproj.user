@@ -9,7 +9,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LocalDebuggerWorkingDirectory>$(OutDir)../../../../simulator/win32</LocalDebuggerWorkingDirectory>
     <LocalDebuggerCommand>$(OutDir)../../../../simulator/win32/$(TargetFileName)</LocalDebuggerCommand>
-    <LocalDebuggerCommandArguments>C:\Users\reve\Desktop\export_window\src</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>-workdir $(ProjectDir)../../../</LocalDebuggerCommandArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LocalDebuggerCommandArguments>-workdir $(ProjectDir)../../../</LocalDebuggerCommandArguments>
