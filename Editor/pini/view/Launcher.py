@@ -200,7 +200,7 @@ class LauncherView(Widget):
 				self.loadingWorkspace(Settings()["workspace"])
 
 	def gotoSite(self):
-		QtGui.QDesktopServices.openUrl("http://piniengine.com");
+		QtGui.QDesktopServices.openUrl("https://github.com/ho4040/pini-engine/issues");
 
 	def closeEvent(self,e):
 		super(LauncherView,self).closeEvent(e)
